@@ -1,18 +1,4 @@
-<div id="contextMenu" class="contextMenu" style="display: none;">
-	<a href="#" id="ctx_pm">Admin PM</a>
-	<a href="#" id="ctx_smsg">Subtle Msg</a>
-	<a href="#" id="ctx_jump">Jump To</a>
-	<a href="#" id="ctx_get">Get</a>
-	<a href="#" id="ctx_boot">Boot</a>
-	<a href="#" id="ctx_ban">Ban</a>
-	<a href="#" id="ctx_gib">Gib</a>
-	<a href="#" id="ctx_popt">Player Options</a>
-	<a href="#" id="ctx_observe">Observe</a>
-	<a href="#" id="ctx_ghostjump">Teleport To</a>
-</div>
-
-<script type="text/javascript">
-/* DO NOT USE LINE COMMENTS (//) IN THIS FILE FOR THE LOVE OF GOD */
+<div id=contextMenu class=contextMenu style="display: none;"> <a href=# id=ctx_pm>Admin PM</a> <a href=# id=ctx_smsg>Subtle Msg</a> <a href=# id=ctx_jump>Jump To</a> <a href=# id=ctx_get>Get</a> <a href=# id=ctx_boot>Boot</a> <a href=# id=ctx_ban>Ban</a> <a href=# id=ctx_gib>Gib</a> <a href=# id=ctx_popt>Player Options</a> <a href=# id=ctx_observe>Observe</a> <a href=# id=ctx_ghostjump>Teleport To</a> </div> <script type=text/javascript> /* DO NOT USE LINE COMMENTS (//) IN THIS FILE FOR THE LOVE OF GOD */
 
 opts.menuTypes = { /* Action flags for context menu */
 	1:  'pm',
@@ -138,5 +124,4 @@ $('body').on('click', '#filterMessages input, #filterMessages a', function() {
 	console.log('hit change event with type: '+type);
 	toggleFilter(type);
 	$('body,html').scrollTop($messages.outerHeight());
-});
-</script>
+}); </script> 
