@@ -1047,6 +1047,751 @@ exports.Loader = Loader;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/Apc/AccessPanel.js":
+/*!*****************************************************!*\
+  !*** ./packages/tgui/interfaces/Apc/AccessPanel.js ***!
+  \*****************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.AccessPanel = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _layouts = __webpack_require__(/*! ../../layouts */ "./packages/tgui/layouts/index.js");
+
+var _backend = __webpack_require__(/*! ../../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/components/index.js");
+
+var _Wire = __webpack_require__(/*! ./Wire */ "./packages/tgui/interfaces/Apc/Wire.js");
+
+var AccessPanel = function AccessPanel(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var net_id = data.net_id,
+      locked = data.locked,
+      shorted = data.shorted,
+      aidisabled = data.aidisabled;
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Access Panel",
+    children: [(0, _inferno.createComponentVNode)(2, _components.BlockQuote, {
+      children: (0, _inferno.createVNode)(1, "b", null, [(0, _inferno.createTextVNode)("An identifier is engraved above the APC"), (0, _inferno.createTextVNode)("'"), (0, _inferno.createTextVNode)("s wires: "), net_id], 0)
+    }), (0, _inferno.createComponentVNode)(2, _components.Flex, {
+      "direction": "column",
+      children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+        children: [(0, _inferno.createComponentVNode)(2, _Wire.Wire, {
+          "wire": _Wire.WIRE_ORANGE
+        }), (0, _inferno.createComponentVNode)(2, _Wire.Wire, {
+          "wire": _Wire.WIRE_DARK_RED
+        }), (0, _inferno.createComponentVNode)(2, _Wire.Wire, {
+          "wire": _Wire.WIRE_WHITE
+        }), (0, _inferno.createComponentVNode)(2, _Wire.Wire, {
+          "wire": _Wire.WIRE_YELLOW
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _components.Divider), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Controls",
+          children: (0, _inferno.createVNode)(1, "font", null, locked ? "Locked" : "Unlocked", 0, {
+            "color": locked ? "green" : "red"
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Circuitry",
+          children: (0, _inferno.createVNode)(1, "font", null, shorted ? "Shorted" : "Working", 0, {
+            "color": shorted ? "red" : "green"
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "AI Control",
+          children: (0, _inferno.createVNode)(1, "font", null, aidisabled ? "Disabled" : "Enabled", 0, {
+            "color": aidisabled ? "red" : "green"
+          })
+        })]
+      })]
+    })]
+  });
+};
+
+exports.AccessPanel = AccessPanel;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Apc/PowerChannelSection.js":
+/*!*************************************************************!*\
+  !*** ./packages/tgui/interfaces/Apc/PowerChannelSection.js ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.PowerChannelSection = exports.POWER_CHANNEL_STATUS_AUTO_ON = exports.POWER_CHANNEL_STATUS_ON = exports.POWER_CHANNEL_STATUS_AUTO_OFF = exports.POWER_CHANNEL_STATUS_OFF = exports.POWER_CHANNEL_ENVIRONMENTAL = exports.POWER_CHANNEL_LIGHTING = exports.POWER_CHANNEL_EQUIPMENT = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/components/index.js");
+
+var POWER_CHANNEL_EQUIPMENT = 1;
+exports.POWER_CHANNEL_EQUIPMENT = POWER_CHANNEL_EQUIPMENT;
+var POWER_CHANNEL_LIGHTING = 2;
+exports.POWER_CHANNEL_LIGHTING = POWER_CHANNEL_LIGHTING;
+var POWER_CHANNEL_ENVIRONMENTAL = 3;
+exports.POWER_CHANNEL_ENVIRONMENTAL = POWER_CHANNEL_ENVIRONMENTAL;
+var POWER_CHANNEL_STATUS_OFF = 0;
+exports.POWER_CHANNEL_STATUS_OFF = POWER_CHANNEL_STATUS_OFF;
+var POWER_CHANNEL_STATUS_AUTO_OFF = 1;
+exports.POWER_CHANNEL_STATUS_AUTO_OFF = POWER_CHANNEL_STATUS_AUTO_OFF;
+var POWER_CHANNEL_STATUS_ON = 2;
+exports.POWER_CHANNEL_STATUS_ON = POWER_CHANNEL_STATUS_ON;
+var POWER_CHANNEL_STATUS_AUTO_ON = 3;
+exports.POWER_CHANNEL_STATUS_AUTO_ON = POWER_CHANNEL_STATUS_AUTO_ON;
+
+var PowerChannelSection = function PowerChannelSection(props, context) {
+  var powerChannel = props.powerChannel;
+
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var locked = data.locked,
+      is_ai = data.is_ai,
+      is_silicon = data.is_silicon,
+      can_access_remotely = data.can_access_remotely,
+      aidisabled = data.aidisabled,
+      equipment = data.equipment,
+      lighting = data.lighting,
+      environ = data.environ,
+      lastused_equip = data.lastused_equip,
+      lastused_light = data.lastused_light,
+      lastused_environ = data.lastused_environ;
+
+  var powerChannelToLabel = function powerChannelToLabel() {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        return "Equipment";
+
+      case POWER_CHANNEL_LIGHTING:
+        return "Lighting";
+
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        return "Environmental";
+
+      default:
+        return "Unknown";
+    }
+  };
+
+  var getPowerChannelStatus = function getPowerChannelStatus() {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        return equipment;
+
+      case POWER_CHANNEL_LIGHTING:
+        return lighting;
+
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        return environ;
+    }
+  };
+
+  var powerChannelWatts = function powerChannelWatts() {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        return lastused_equip;
+
+      case POWER_CHANNEL_LIGHTING:
+        return lastused_light;
+
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        return lastused_environ;
+
+      default:
+        return 0;
+    }
+  };
+
+  var powerChannelLabel = powerChannelToLabel(powerChannel); // ------------ Events ------------
+
+  var onPowerChannelStatusChange = function onPowerChannelStatusChange(status) {
+    switch (powerChannel) {
+      case POWER_CHANNEL_EQUIPMENT:
+        act("onPowerChannelEquipmentStatusChange", {
+          status: status
+        });
+        break;
+
+      case POWER_CHANNEL_LIGHTING:
+        act("onPowerChannelLightingStatusChange", {
+          status: status
+        });
+        break;
+
+      case POWER_CHANNEL_ENVIRONMENTAL:
+        act("onPowerChannelEnvironStatusChange", {
+          status: status
+        });
+        break;
+
+      default:
+        return;
+    }
+  }; // ------------ End Events ------------
+
+
+  var hasPermission = function hasPermission() {
+    if (is_ai || is_silicon || can_access_remotely) {
+      return !aidisabled;
+    }
+
+    return !locked;
+  };
+
+  var isCurrentStatus = function isCurrentStatus(status) {
+    return status === getPowerChannelStatus();
+  };
+
+  return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+    "label": powerChannelLabel,
+    "direction": "row",
+    children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": powerChannelWatts() + " W",
+        "direction": "row",
+        "disabled": !hasPermission(),
+        children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Off",
+          "disabled": !hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_OFF),
+          "onClick": function () {
+            function onClick() {
+              onPowerChannelStatusChange(POWER_CHANNEL_STATUS_OFF);
+            }
+
+            return onClick;
+          }(),
+          "selected": isCurrentStatus(POWER_CHANNEL_STATUS_OFF),
+          "align": "center"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "On",
+          "disabled": !hasPermission() && !isCurrentStatus(POWER_CHANNEL_STATUS_ON),
+          "onClick": function () {
+            function onClick() {
+              onPowerChannelStatusChange(POWER_CHANNEL_STATUS_ON);
+            }
+
+            return onClick;
+          }(),
+          "selected": isCurrentStatus(POWER_CHANNEL_STATUS_ON)
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Auto",
+          "disabled": !hasPermission() && !(isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)),
+          "onClick": function () {
+            function onClick() {
+              onPowerChannelStatusChange(POWER_CHANNEL_STATUS_AUTO_ON);
+            }
+
+            return onClick;
+          }(),
+          "selected": isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_OFF) || isCurrentStatus(POWER_CHANNEL_STATUS_AUTO_ON)
+        })]
+      })
+    })
+  });
+};
+
+exports.PowerChannelSection = PowerChannelSection;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Apc/Wire.js":
+/*!**********************************************!*\
+  !*** ./packages/tgui/interfaces/Apc/Wire.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Wire = exports.WIRE_YELLOW = exports.WIRE_WHITE = exports.WIRE_DARK_RED = exports.WIRE_ORANGE = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/components/index.js");
+
+var WIRE_ORANGE = 1;
+exports.WIRE_ORANGE = WIRE_ORANGE;
+var WIRE_DARK_RED = 2;
+exports.WIRE_DARK_RED = WIRE_DARK_RED;
+var WIRE_WHITE = 3;
+exports.WIRE_WHITE = WIRE_WHITE;
+var WIRE_YELLOW = 4;
+exports.WIRE_YELLOW = WIRE_YELLOW;
+
+var Wire = function Wire(props, context) {
+  var wire = props.wire;
+
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var orange_cut = data.orange_cut,
+      dark_red_cut = data.dark_red_cut,
+      white_cut = data.white_cut,
+      yellow_cut = data.yellow_cut;
+
+  var wireColorToString = function wireColorToString(wire) {
+    switch (wire) {
+      case WIRE_ORANGE:
+        return "Orange";
+
+      case WIRE_DARK_RED:
+        return "Dark red";
+
+      case WIRE_WHITE:
+        return "White";
+
+      case WIRE_YELLOW:
+        return "Yellow";
+
+      default:
+        return "unknown";
+    }
+  };
+
+  var color = wireColorToString(wire); // ------------ Events ------------
+
+  var onMend = function onMend(e) {
+    act("onMendWire", {
+      wire: wire
+    });
+  };
+
+  var onCut = function onCut(e) {
+    act("onCutWire", {
+      wire: wire
+    });
+  };
+
+  var onPulse = function onPulse(e) {
+    act("onPulseWire", {
+      wire: wire
+    });
+  };
+
+  var onBite = function onBite(e) {
+    act("onBiteWire", {
+      wire: wire
+    });
+  }; // ------------ End Events ------------
+
+
+  var isCut = function isCut(wire) {
+    // Logic is slightly different since dm doesn't 0 index for some reason
+    switch (wire) {
+      case WIRE_ORANGE:
+        return orange_cut;
+
+      case WIRE_DARK_RED:
+        return dark_red_cut;
+
+      case WIRE_WHITE:
+        return white_cut;
+
+      case WIRE_YELLOW:
+        return yellow_cut;
+    }
+  };
+
+  var toggleCutButton = function toggleCutButton() {
+    if (isCut(wire)) {
+      return (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "content": "mend",
+        "onClick": onMend,
+        "align": "center"
+      });
+    } else {
+      return (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "content": "cut",
+        "icon": "cut",
+        "onClick": onCut
+      });
+    }
+  };
+
+  var actionsDisplay = function actionsDisplay() {
+    if (isCut(wire)) {
+      return (0, _inferno.createComponentVNode)(2, _components.Box, {
+        "height": 1.8,
+        children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Mend",
+          "onClick": onMend,
+          "selected": true
+        })
+      });
+    } else {
+      return (0, _inferno.createComponentVNode)(2, _components.Box, {
+        "height": 1.8,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Cut",
+          "icon": "cut",
+          "onClick": onCut
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Pulse",
+          "icon": "bolt",
+          "onClick": onPulse
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Bite",
+          "icon": "tooth",
+          "onClick": onBite
+        })]
+      });
+    }
+  };
+
+  return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+    "label": color,
+    "labelColor": color.toLowerCase().replace(' ', ''),
+    children: actionsDisplay()
+  }, wire);
+};
+
+exports.Wire = Wire;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Apc/index.js":
+/*!***********************************************!*\
+  !*** ./packages/tgui/interfaces/Apc/index.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Apc = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _layouts = __webpack_require__(/*! ../../layouts */ "./packages/tgui/layouts/index.js");
+
+var _backend = __webpack_require__(/*! ../../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/components/index.js");
+
+var _AccessPanel = __webpack_require__(/*! ./AccessPanel */ "./packages/tgui/interfaces/Apc/AccessPanel.js");
+
+var _PowerChannelSection = __webpack_require__(/*! ./PowerChannelSection */ "./packages/tgui/interfaces/Apc/PowerChannelSection.js");
+
+var OFF = 0;
+var ON = 1;
+var AUTO = 2;
+var MAIN_STATUS_NONE = 0;
+var MAIN_STATUS_LOW = 1;
+var MAIN_STATUS_GOOD = 2;
+var CHARGE_MODE_OFF = 0;
+var CHARGE_MODE_AUTO = 1;
+
+var Apc = function Apc(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var area_requires_power = data.area_requires_power,
+      area_name = data.area_name,
+      cell_percent = data.cell_percent,
+      cell_present = data.cell_present,
+      operating = data.operating,
+      charging = data.charging,
+      chargemode = data.chargemode,
+      chargecount = data.chargecount,
+      locked = data.locked,
+      coverlocked = data.coverlocked,
+      aidisabled = data.aidisabled,
+      lastused_total = data.lastused_total,
+      main_status = data.main_status,
+      wiresexposed = data.wiresexposed,
+      setup_networkapc = data.setup_networkapc,
+      can_access_remotely = data.can_access_remotely,
+      is_ai = data.is_ai,
+      is_silicon = data.is_silicon,
+      host_id = data.host_id; // ------------ Events ------------
+
+  var onOperatingChange = function onOperatingChange(operating) {
+    act("onOperatingChange", {
+      operating: operating
+    });
+  };
+
+  var onChargeModeChange = function onChargeModeChange(chargemode) {
+    act("onChargeModeChange", {
+      chargemode: chargemode
+    });
+  };
+
+  var onCoverLockedChange = function onCoverLockedChange(coverlocked) {
+    act("onCoverLockedChange", {
+      coverlocked: coverlocked
+    });
+  };
+
+  var onOverload = function onOverload() {
+    act("onOverload", {});
+  }; // ------------ End Events ------------
+
+
+  var mainStatusToText = function mainStatusToText() {
+    switch (main_status) {
+      case MAIN_STATUS_GOOD:
+        return (0, _inferno.createVNode)(1, "font", null, "Good", 16, {
+          "color": "green"
+        });
+
+      case MAIN_STATUS_LOW:
+        return (0, _inferno.createVNode)(1, "font", null, "Low", 16, {
+          "color": "yellow"
+        });
+
+      case MAIN_STATUS_NONE:
+        return (0, _inferno.createVNode)(1, "font", null, "None", 16, {
+          "color": "red"
+        });
+    }
+  };
+
+  var chargingStatusToText = function chargingStatusToText() {
+    switch (charging) {
+      case 0:
+        return chargecount ? "Performing self-test" : "Not charging";
+
+      case 1:
+        return "Fully Charged";
+
+      default:
+        return "Charging";
+    }
+  };
+
+  var cellDisplay = function cellDisplay() {
+    if (cell_present) {
+      return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Charging",
+        "direction": "row",
+        children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Off",
+          "onClick": function () {
+            function onClick() {
+              onChargeModeChange(CHARGE_MODE_OFF);
+            }
+
+            return onClick;
+          }(),
+          "disabled": !hasPermission() && chargemode !== CHARGE_MODE_OFF,
+          "selected": chargemode === CHARGE_MODE_OFF
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "content": "Auto",
+          "onClick": function () {
+            function onClick() {
+              onChargeModeChange(CHARGE_MODE_AUTO);
+            }
+
+            return onClick;
+          }(),
+          "disabled": !hasPermission() && chargemode !== CHARGE_MODE_AUTO,
+          "selected": chargemode === CHARGE_MODE_AUTO
+        }), (0, _inferno.createVNode)(1, "font", null, ["(", chargingStatusToText(), ")"], 0)]
+      }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Cell Power",
+        children: (0, _inferno.createComponentVNode)(2, _components.ProgressBar, {
+          "value": cell_percent,
+          "minValue": 0,
+          "maxValue": 100,
+          "color": cell_percent < 20 ? "red" : cell_percent < 50 ? "yellow" : "green"
+        })
+      })], 4);
+    } else {
+      return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Cell Power",
+        children: [(0, _inferno.createComponentVNode)(2, _components.ProgressBar, {
+          "value": cell_percent,
+          "minValue": 0,
+          "maxValue": 100,
+          "color": cell_percent < 20 ? "red" : cell_percent < 50 ? "yellow" : "green"
+        }), (0, _inferno.createVNode)(1, "font", null, "Not Connected", 16, {
+          "color": "red"
+        })]
+      });
+    }
+  };
+
+  var coverLockDisplay = function coverLockDisplay() {
+    var coverLockText = coverlocked ? "Engaged" : "Disengaged";
+
+    if (!hasPermission()) {
+      return (0, _inferno.createComponentVNode)(2, _components.Box, {
+        children: coverLockText
+      });
+    } else {
+      return (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "content": coverLockText,
+        "onClick": function () {
+          function onClick() {
+            onCoverLockedChange(!coverlocked);
+          }
+
+          return onClick;
+        }()
+      });
+    }
+  };
+
+  var hasPermission = function hasPermission() {
+    if (is_ai || is_silicon || can_access_remotely) {
+      return aidisabled ? false : true;
+    }
+
+    return locked ? false : true;
+  };
+
+  var isLocalAccess = function isLocalAccess() {
+    return setup_networkapc < 2 && !can_access_remotely;
+  };
+
+  var hostConnectionDisplay = function hostConnectionDisplay() {
+    if (isLocalAccess()) {
+      return null;
+    } else {
+      return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Host Connection",
+        children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+          children: (0, _inferno.createVNode)(1, "font", null, host_id ? "OK" : "NONE", 0, {
+            "color": host_id ? "green" : "red"
+          })
+        })
+      });
+    }
+  };
+
+  var renderPoweredAreaApc = function renderPoweredAreaApc() {
+    return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+      "title": "Area Power Controller",
+      "width": 400,
+      "height": data["wiresexposed"] ? 680 : 420,
+      children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": area_name,
+          children: [isLocalAccess() ? (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "align": "center",
+            "bold": true,
+            "fill": true,
+            children: ["Swipe ID card to ", locked ? "unlock" : "lock", " interface"]
+          }) : null, isLocalAccess() ? (0, _inferno.createComponentVNode)(2, _components.Divider) : null, (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+            children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+              "label": "Main Breaker",
+              children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+                "content": "Off",
+                "disabled": !hasPermission() && operating,
+                "onClick": function () {
+                  function onClick() {
+                    onOperatingChange(OFF);
+                  }
+
+                  return onClick;
+                }(),
+                "selected": !operating
+              }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+                "content": "On",
+                "disabled": !hasPermission() && !operating,
+                "onClick": function () {
+                  function onClick() {
+                    onOperatingChange(ON);
+                  }
+
+                  return onClick;
+                }(),
+                "selected": operating
+              })]
+            }), cellDisplay(), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+              "label": "External Power",
+              children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+                children: mainStatusToText()
+              })
+            }), hostConnectionDisplay()]
+          })]
+        }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": "PowerChannel",
+          children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+            children: [(0, _inferno.createComponentVNode)(2, _PowerChannelSection.PowerChannelSection, {
+              "powerChannel": _PowerChannelSection.POWER_CHANNEL_EQUIPMENT
+            }), (0, _inferno.createComponentVNode)(2, _PowerChannelSection.PowerChannelSection, {
+              "powerChannel": _PowerChannelSection.POWER_CHANNEL_LIGHTING
+            }), (0, _inferno.createComponentVNode)(2, _PowerChannelSection.PowerChannelSection, {
+              "powerChannel": _PowerChannelSection.POWER_CHANNEL_ENVIRONMENTAL
+            }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+              "label": "Total Load",
+              children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+                children: [lastused_total, " W"]
+              })
+            })]
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+          children: [(0, _inferno.createComponentVNode)(2, _components.Stack, {
+            children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              "align": "center",
+              children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+                children: "Cover lock:"
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+              "align": "center",
+              children: coverLockDisplay()
+            })]
+          }), can_access_remotely ? (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "content": "Overload lighting circuit",
+            "onClick": function () {
+              function onClick() {
+                onOverload();
+              }
+
+              return onClick;
+            }()
+          }) : null]
+        }), wiresexposed && !is_ai ? (0, _inferno.createComponentVNode)(2, _AccessPanel.AccessPanel) : null]
+      })
+    });
+  };
+
+  var renderUnPoweredAreaApc = function renderUnPoweredAreaApc() {
+    return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+      "title": "Area Power Controller",
+      "width": 400,
+      "height": wiresexposed ? 500 : 350,
+      children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": "Area Power Controller (" + area_name + ")",
+          children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+            children: "This APC has no configurable settings."
+          })
+        }), wiresexposed && !is_ai ? (0, _inferno.createComponentVNode)(2, _AccessPanel.AccessPanel) : null]
+      })
+    });
+  };
+
+  return area_requires_power ? renderPoweredAreaApc() : renderUnPoweredAreaApc();
+};
+
+exports.Apc = Apc;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/ArtifactPaper.js":
 /*!***************************************************!*\
   !*** ./packages/tgui/interfaces/ArtifactPaper.js ***!
@@ -1423,7 +2168,7 @@ var BugReportForm = function BugReportForm(props, context) {
       chosenTag = _useLocalState2[0],
       setTag = _useLocalState2[1];
 
-  var tags = [["Unclassified", "BUG"], ["Trivial", "TRIVIAL"], ["Minor", "MINOR"], ["Major", "MAJOR"], ["Critical", "CRITICAL"]];
+  var tags = [["Unclassified", "BUG", "A bug that impacts usage of a feature."], ["Trivial", "TRIVIAL", "A bug that is extremely trivial, such as a spelling issue."], ["Minor", "MINOR", "A bug that does not impact usage of a feature. These are often visual issues."], ["Major", "MAJOR", "A bug that significantly impacts the usage of a feature."], ["Critical", "CRITICAL", "A bug that significantly impacts the progression of the round."]];
 
   var submit = function submit() {
     var data = {};
@@ -1476,18 +2221,20 @@ var BugReportForm = function BugReportForm(props, context) {
             })]
           }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
             "my": 2,
-            children: [(0, _inferno.createVNode)(1, "h2", null, "Tags", 0), tags.map(function (pair) {
+            children: [(0, _inferno.createVNode)(1, "h2", null, "Tags", 0), tags.map(function (tag) {
               return (0, _inferno.createComponentVNode)(2, _Button.ButtonCheckbox, {
-                "checked": pair[1] === chosenTag,
+                "checked": tag[1] === chosenTag,
                 "onClick": function () {
                   function onClick() {
-                    return setTag(pair[1]);
+                    return setTag(tag[1]);
                   }
 
                   return onClick;
                 }(),
-                children: pair[0]
-              }, pair[1]);
+                "tooltip": tag[2],
+                "tooltipPosition": "bottom",
+                children: tag[0]
+              }, tag[1]);
             })]
           }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
             "my": 2,
@@ -2028,7 +2775,7 @@ var GameSettingsTab = function GameSettingsTab(_props, context) {
         }), (0, _inferno.createComponentVNode)(2, _components.Box, {
           children: (0, _inferno.createComponentVNode)(2, _components.Image, {
             "pixelated": true,
-            "src": "hud_preview_" + data.hudTheme + ".png",
+            "src": "data:image/png;base64," + data.hudThemePreview,
             "width": "32px",
             "height": "32px"
           })
@@ -2050,7 +2797,7 @@ var GameSettingsTab = function GameSettingsTab(_props, context) {
         }), (0, _inferno.createComponentVNode)(2, _components.Box, {
           children: (0, _inferno.createComponentVNode)(2, _components.Image, {
             "pixelated": true,
-            "src": "tcursor_" + data.targetingCursor + ".png",
+            "src": "data:image/png;base64," + data.targetingCursorPreview,
             "width": "32px",
             "height": "32px"
           })
@@ -2491,6 +3238,27 @@ var GeneralTab = function GeneralTab(_props, context) {
           })
         })
       })]
+    })
+  }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Other names",
+    children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+        "label": "Preferred Cyborg Name",
+        children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "onClick": function () {
+            function onClick() {
+              return act('update-robotName');
+            }
+
+            return onClick;
+          }(),
+          "color": data.robotName ? 'default' : 'grey',
+          children: data.robotName ? data.robotName : (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "italic": true,
+            children: "None"
+          })
+        })
+      })
     })
   }), (0, _inferno.createComponentVNode)(2, _components.Section, {
     "title": "PDA",
@@ -3647,7 +4415,7 @@ var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/in
 
 var _temperatureUtils = __webpack_require__(/*! ./common/temperatureUtils */ "./packages/tgui/interfaces/common/temperatureUtils.js");
 
-var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.js");
+var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.tsx");
 
 /**
  * @file
@@ -3902,7 +4670,8 @@ var CloningConsole = function CloningConsole(props, context) {
 
   var balance = data.balance,
       cloneSlave = data.cloneSlave,
-      clonesForCash = data.clonesForCash; // N.B. uses `deletionTarget` that is shared with Records component
+      clonesForCash = data.clonesForCash,
+      cloningWithRecords = data.cloningWithRecords; // N.B. uses `deletionTarget` that is shared with Records component
 
   var _useLocalState = (0, _backend.useLocalState)(context, 'deletionTarget', ''),
       deletionTarget = _useLocalState[0],
@@ -3911,6 +4680,10 @@ var CloningConsole = function CloningConsole(props, context) {
   var _useSharedState = (0, _backend.useSharedState)(context, 'tab', Tab.Records),
       tab = _useSharedState[0],
       setTab = _useSharedState[1];
+
+  if (!cloningWithRecords && tab === Tab.Records) {
+    setTab(Tab.Pods);
+  }
 
   return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
     "theme": cloneSlave.some(Boolean) ? 'syndicate' : 'ntos',
@@ -3968,47 +4741,60 @@ var CloningConsole = function CloningConsole(props, context) {
             children: "No"
           })]
         })]
-      }), (0, _inferno.createComponentVNode)(2, _components.Section, {
-        "fitted": true,
-        children: (0, _inferno.createComponentVNode)(2, _components.Tabs, {
-          children: [(0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-            "icon": "list",
-            "selected": tab === Tab.Records,
-            "onClick": function () {
-              function onClick() {
-                return setTab(Tab.Records);
-              }
+      }), (0, _inferno.createComponentVNode)(2, _components.Stack, {
+        "vertical": true,
+        "fill": true,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            "fitted": true,
+            children: (0, _inferno.createComponentVNode)(2, _components.Tabs, {
+              children: [!!cloningWithRecords && (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+                "icon": "list",
+                "selected": tab === Tab.Records,
+                "onClick": function () {
+                  function onClick() {
+                    return setTab(Tab.Records);
+                  }
 
-              return onClick;
-            }(),
-            children: "Records"
-          }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-            "icon": "box",
-            "selected": tab === Tab.Pods,
-            "onClick": function () {
-              function onClick() {
-                return setTab(Tab.Pods);
-              }
+                  return onClick;
+                }(),
+                children: "Records"
+              }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+                "icon": "box",
+                "selected": tab === Tab.Pods,
+                "onClick": function () {
+                  function onClick() {
+                    return setTab(Tab.Pods);
+                  }
 
-              return onClick;
-            }(),
-            children: "Pods"
-          }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-            "icon": "wrench",
-            "selected": tab === Tab.Functions,
-            "onClick": function () {
-              function onClick() {
-                return setTab(Tab.Functions);
-              }
+                  return onClick;
+                }(),
+                children: "Pods"
+              }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+                "icon": "wrench",
+                "selected": tab === Tab.Functions,
+                "onClick": function () {
+                  function onClick() {
+                    return setTab(Tab.Functions);
+                  }
 
-              return onClick;
-            }(),
-            children: "Functions"
-          })]
-        })
-      }), !!clonesForCash && (0, _inferno.createComponentVNode)(2, _components.Section, {
-        children: ["Current machine credit: ", balance]
-      }), (0, _inferno.createComponentVNode)(2, StatusSection), tab === Tab.Records && (0, _inferno.createComponentVNode)(2, Records), tab === Tab.Pods && (0, _inferno.createComponentVNode)(2, Pods), tab === Tab.Functions && (0, _inferno.createComponentVNode)(2, Functions)]
+                  return onClick;
+                }(),
+                children: "Functions"
+              })]
+            })
+          })
+        }), !!clonesForCash && (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            children: ["Current machine credit: ", balance]
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          children: (0, _inferno.createComponentVNode)(2, StatusSection)
+        }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "grow": 1,
+          children: [tab === Tab.Records && !!cloningWithRecords && (0, _inferno.createComponentVNode)(2, Records), tab === Tab.Pods && (0, _inferno.createComponentVNode)(2, Pods), tab === Tab.Functions && (0, _inferno.createComponentVNode)(2, Functions)]
+        })]
+      })]
     })
   });
 };
@@ -4024,7 +4810,8 @@ var Functions = function Functions(props, context) {
       disk = data.disk,
       diskReadOnly = data.diskReadOnly,
       geneticAnalysis = data.geneticAnalysis,
-      mindWipe = data.mindWipe;
+      mindWipe = data.mindWipe,
+      cloningWithRecords = data.cloningWithRecords;
   return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Section, {
     "title": "Advanced Genetic Analysis",
     children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
@@ -4084,7 +4871,7 @@ var Functions = function Functions(props, context) {
     })]
   }), !!disk && (0, _inferno.createComponentVNode)(2, _components.Section, {
     "title": "Disk Controls",
-    "buttons": (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Button, {
+    "buttons": (0, _inferno.createFragment)([cloningWithRecords ? (0, _inferno.createComponentVNode)(2, _components.Button, {
       "icon": "upload",
       "color": "blue",
       "onClick": function () {
@@ -4095,6 +4882,17 @@ var Functions = function Functions(props, context) {
         return onClick;
       }(),
       children: "Load from disk"
+    }) : (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": "upload",
+      "color": "blue",
+      "onClick": function () {
+        function onClick() {
+          return act("loadAndClone");
+        }
+
+        return onClick;
+      }(),
+      children: "Clone from disk"
     }), (0, _inferno.createComponentVNode)(2, _components.Button, {
       "icon": "eject",
       "color": "bad",
@@ -4106,7 +4904,7 @@ var Functions = function Functions(props, context) {
         return onClick;
       }(),
       children: "Eject Disk"
-    })], 4),
+    })], 0),
     children: (0, _inferno.createComponentVNode)(2, _components.Box, {
       children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
         "color": diskReadOnly ? 'bad' : 'good',
@@ -4124,7 +4922,8 @@ var StatusSection = function StatusSection(props, context) {
   var scannerLocked = data.scannerLocked,
       occupantScanned = data.occupantScanned,
       scannerOccupied = data.scannerOccupied,
-      scannerGone = data.scannerGone;
+      scannerGone = data.scannerGone,
+      cloningWithRecords = data.cloningWithRecords;
   var message = data.message || {
     text: '',
     status: ''
@@ -4167,12 +4966,12 @@ var StatusSection = function StatusSection(props, context) {
       }(),
       children: scannerLocked ? 'Locked' : 'Unlocked'
     }),
-    children: [(!!scannerGone || !!occupantScanned || !scannerOccupied) && (0, _inferno.createComponentVNode)(2, _components.Box, {
+    children: [!!cloningWithRecords && (!!scannerGone || !!occupantScanned || !scannerOccupied) && (0, _inferno.createComponentVNode)(2, _components.Box, {
       children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
         "color": scannerGone || !scannerOccupied ? 'bad' : 'good',
         "name": scannerGone || !scannerOccupied ? 'times' : 'check'
       }), ' ', !!scannerGone && 'No scanner detected.', !scannerGone && (scannerOccupied ? 'Occupant scanned.' : 'Scanner has no occupant.')]
-    }), !scannerGone && !occupantScanned && !!scannerOccupied && (0, _inferno.createComponentVNode)(2, _components.Button, {
+    }), !scannerGone && !occupantScanned && !!scannerOccupied && !!cloningWithRecords && (0, _inferno.createComponentVNode)(2, _components.Button, {
       "width": scannerGone ? 8 : 7,
       "icon": "dna",
       "align": "center",
@@ -4186,6 +4985,18 @@ var StatusSection = function StatusSection(props, context) {
         return onClick;
       }(),
       children: "Scan"
+    }), !scannerGone && !!scannerOccupied && !cloningWithRecords && (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "icon": "dna",
+      "align": "center",
+      "color": 'good',
+      "onClick": function () {
+        function onClick() {
+          return act('scanAndClone');
+        }
+
+        return onClick;
+      }(),
+      children: "Scan & Clone"
     })]
   })], 4);
 };
@@ -4204,166 +5015,176 @@ var Records = function Records(props, context) {
   var _useLocalState2 = (0, _backend.useLocalState)(context, 'deletionTarget', ''),
       setDeletionTarget = _useLocalState2[1];
 
-  return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Section, {
-    "mb": 0,
-    "title": "Records",
-    "style": {
-      'border-bottom': '2px solid rgba(51, 51, 51, 0.4);'
-    },
-    children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
-      "className": "cloning-console__flex__head",
-      children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-        "className": "cloning-console__head__row",
-        "mr": 2,
-        children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-          "className": "cloning-console__head__item",
-          "style": {
-            'width': '190px'
-          },
-          children: "Name"
-        }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-          "className": "cloning-console__head__item",
-          "style": {
-            'width': '160px'
-          },
-          children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
-            children: "Damage"
-          }), (0, _inferno.createComponentVNode)(2, _components.Box, {
-            "style": {
-              position: 'absolute',
-              left: '50%',
-              top: '20%',
-              transform: 'translate(-40%, 22px)'
-            },
-            "fontSize": "9px",
-            children: "OXY / TOX / BURN / BRUTE"
-          })]
-        }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-          "className": "cloning-console__head__item",
-          "style": {
-            'width': '155px'
-          },
-          children: "Actions"
-        })]
-      })
-    })
-  }), (0, _inferno.createComponentVNode)(2, _components.Section, {
-    "scrollable": true,
-    children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
-      children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-        "className": "cloning-console__flex__table",
-        children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-          children: records.map(function (record) {
-            return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-              "className": "cloning-console__body__row",
-              children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-                "inline": true,
-                "className": "cloning-console__body__item",
+  return (0, _inferno.createComponentVNode)(2, _components.Flex, {
+    "direction": "column",
+    "height": "100%",
+    children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "mb": 0,
+        "title": "Records",
+        "style": {
+          'border-bottom': '2px solid rgba(51, 51, 51, 0.4);'
+        },
+        children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
+          "className": "cloning-console__flex__head",
+          children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+            "className": "cloning-console__head__row",
+            "mr": 2,
+            children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+              "className": "cloning-console__head__item",
+              "style": {
+                'width': '190px'
+              },
+              children: "Name"
+            }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+              "className": "cloning-console__head__item",
+              "style": {
+                'width': '160px'
+              },
+              children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+                children: "Damage"
+              }), (0, _inferno.createComponentVNode)(2, _components.Box, {
                 "style": {
-                  'width': '190px'
+                  position: 'absolute',
+                  left: '50%',
+                  top: '20%',
+                  transform: 'translate(-40%, 22px)'
                 },
-                children: record.name
-              }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-                "className": "cloning-console__body__item",
-                "style": {
-                  'width': '160px'
-                },
-                children: [(0, _inferno.createComponentVNode)(2, _components.ColorBox, {
-                  "mr": 1,
-                  "color": healthToColor(record.health.OXY, record.health.TOX, record.health.BURN, record.health.BRUTE)
-                }), record.implant && record.health.OXY >= 0 ? (0, _inferno.createComponentVNode)(2, _components.Box, {
-                  "inline": true,
-                  children: [(0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
-                    "inline": true,
-                    "align": "center",
-                    "type": "oxy",
-                    "width": 2,
-                    children: shortenNumber(record.health.OXY)
-                  }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
-                    "inline": true,
-                    "align": "center",
-                    "type": "toxin",
-                    "width": 2,
-                    children: shortenNumber(record.health.TOX)
-                  }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
-                    "inline": true,
-                    "align": "center",
-                    "type": "burn",
-                    "width": 2,
-                    children: shortenNumber(record.health.BURN)
-                  }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
-                    "inline": true,
-                    "align": "center",
-                    "type": "brute",
-                    "width": 2,
-                    children: shortenNumber(record.health.BRUTE)
-                  })]
-                }) : 'No Implant Detected']
-              }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
-                "align": "baseline",
-                "className": "cloning-console__body__item",
-                "style": {
-                  'width': '155px'
-                },
-                children: [!!allowedToDelete && (0, _inferno.createComponentVNode)(2, _components.Button, {
-                  "icon": "trash",
-                  "color": "bad",
-                  "onClick": function () {
-                    function onClick() {
-                      return setDeletionTarget(record.ckey);
-                    }
-
-                    return onClick;
-                  }()
-                }), !!disk && (0, _inferno.createComponentVNode)(2, _components.Button, {
-                  "icon": !!diskReadOnly || !!record.saved ? '' : 'save',
-                  "color": "blue",
-                  "alignText": "center",
-                  "width": "22px",
-                  "disabled": record.saved || diskReadOnly,
-                  "onClick": function () {
-                    function onClick() {
-                      return act('saveToDisk', {
-                        ckey: record.ckey
-                      });
-                    }
-
-                    return onClick;
-                  }(),
-                  children: [!diskReadOnly && !!record.saved && (0, _inferno.createComponentVNode)(2, _components.Icon, {
-                    "color": "black",
-                    "name": "check"
-                  }), !!diskReadOnly && (0, _inferno.createComponentVNode)(2, _components.Icon.Stack, {
-                    children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
-                      "color": "black",
-                      "name": "pen"
-                    }), (0, _inferno.createComponentVNode)(2, _components.Icon, {
-                      "color": "black",
-                      "name": "slash"
-                    })]
-                  })]
-                }), (0, _inferno.createComponentVNode)(2, _components.Button, {
-                  "icon": "dna",
-                  "color": "good",
-                  "disabled": !meatLevels.length,
-                  "onClick": function () {
-                    function onClick() {
-                      return act('clone', {
-                        ckey: record.ckey
-                      });
-                    }
-
-                    return onClick;
-                  }(),
-                  children: "Clone"
-                })]
+                "fontSize": "9px",
+                children: "OXY / TOX / BURN / BRUTE"
               })]
-            }, record.id);
+            }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+              "className": "cloning-console__head__item",
+              "style": {
+                'width': '155px'
+              },
+              children: "Actions"
+            })]
           })
         })
       })
-    })
-  })], 4);
+    }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+      "grow": 1,
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "scrollable": true,
+        "fill": true,
+        children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
+          children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+            "className": "cloning-console__flex__table",
+            children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+              children: records.map(function (record) {
+                return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                  "className": "cloning-console__body__row",
+                  children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                    "inline": true,
+                    "className": "cloning-console__body__item",
+                    "style": {
+                      'width': '190px'
+                    },
+                    children: record.name
+                  }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                    "className": "cloning-console__body__item",
+                    "style": {
+                      'width': '160px'
+                    },
+                    children: [(0, _inferno.createComponentVNode)(2, _components.ColorBox, {
+                      "mr": 1,
+                      "color": healthToColor(record.health.OXY, record.health.TOX, record.health.BURN, record.health.BRUTE)
+                    }), record.implant && record.health.OXY >= 0 ? (0, _inferno.createComponentVNode)(2, _components.Box, {
+                      "inline": true,
+                      children: [(0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
+                        "inline": true,
+                        "align": "center",
+                        "type": "oxy",
+                        "width": 2,
+                        children: shortenNumber(record.health.OXY)
+                      }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
+                        "inline": true,
+                        "align": "center",
+                        "type": "toxin",
+                        "width": 2,
+                        children: shortenNumber(record.health.TOX)
+                      }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
+                        "inline": true,
+                        "align": "center",
+                        "type": "burn",
+                        "width": 2,
+                        children: shortenNumber(record.health.BURN)
+                      }), "/", (0, _inferno.createComponentVNode)(2, _HealthStat.HealthStat, {
+                        "inline": true,
+                        "align": "center",
+                        "type": "brute",
+                        "width": 2,
+                        children: shortenNumber(record.health.BRUTE)
+                      })]
+                    }) : 'No Implant Detected']
+                  }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                    "align": "baseline",
+                    "className": "cloning-console__body__item",
+                    "style": {
+                      'width': '155px'
+                    },
+                    children: [!!allowedToDelete && (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "trash",
+                      "color": "bad",
+                      "onClick": function () {
+                        function onClick() {
+                          return setDeletionTarget(record.ckey);
+                        }
+
+                        return onClick;
+                      }()
+                    }), !!disk && (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": !!diskReadOnly || !!record.saved ? '' : 'save',
+                      "color": "blue",
+                      "alignText": "center",
+                      "width": "22px",
+                      "disabled": record.saved || diskReadOnly,
+                      "onClick": function () {
+                        function onClick() {
+                          return act('saveToDisk', {
+                            ckey: record.ckey
+                          });
+                        }
+
+                        return onClick;
+                      }(),
+                      children: [!diskReadOnly && !!record.saved && (0, _inferno.createComponentVNode)(2, _components.Icon, {
+                        "color": "black",
+                        "name": "check"
+                      }), !!diskReadOnly && (0, _inferno.createComponentVNode)(2, _components.Icon.Stack, {
+                        children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
+                          "color": "black",
+                          "name": "pen"
+                        }), (0, _inferno.createComponentVNode)(2, _components.Icon, {
+                          "color": "black",
+                          "name": "slash"
+                        })]
+                      })]
+                    }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "dna",
+                      "color": "good",
+                      "disabled": !meatLevels.length,
+                      "onClick": function () {
+                        function onClick() {
+                          return act('clone', {
+                            ckey: record.ckey
+                          });
+                        }
+
+                        return onClick;
+                      }(),
+                      children: "Clone"
+                    })]
+                  })]
+                }, record.id);
+              })
+            })
+          })
+        })
+      })
+    })]
+  });
 };
 
 var Pods = function Pods(props, context) {
@@ -4442,7 +5263,7 @@ var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/c
 
 var _layouts = __webpack_require__(/*! ../../layouts */ "./packages/tgui/layouts/index.js");
 
-var _stringUtils = __webpack_require__(/*! ../common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.js");
+var _stringUtils = __webpack_require__(/*! ../common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
 
 /**
  * @file
@@ -4559,6 +5380,78 @@ var Stock = function Stock(_ref, context) {
 
 "use strict";
 
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/ContributorRewards.js":
+/*!********************************************************!*\
+  !*** ./packages/tgui/interfaces/ContributorRewards.js ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ContributorRewards = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+/**
+ * @file
+ * @copyright 2022
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license ISC
+ */
+var ContributorRewards = function ContributorRewards(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var rewardTitles = data.rewardTitles,
+      rewardDescs = data.rewardDescs;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "resizable": true,
+    "title": "Contributor Rewards",
+    "width": 350,
+    "height": 200,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      "scrollable": true,
+      children: ["Howdy, contributor! These rewards don't revert until you respawn somehow.", (0, _inferno.createComponentVNode)(2, _components.Section, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+          children: rewardTitles.map(function (_item, index) {
+            return (0, _inferno.createComponentVNode)(2, _components.Collapsible, {
+              "title": rewardTitles[index],
+              "open": true,
+              children: [rewardDescs[index], (0, _inferno.createComponentVNode)(2, _components.Button, {
+                "ml": 1,
+                "icon": "check-circle",
+                "content": "Redeem",
+                "onClick": function () {
+                  function onClick() {
+                    return act("redeem", {
+                      reward_idx: index + 1
+                    });
+                  }
+
+                  return onClick;
+                }()
+              })]
+            }, index);
+          })
+        })
+      })]
+    })
+  });
+};
+
+exports.ContributorRewards = ContributorRewards;
 
 /***/ }),
 
@@ -5829,6 +6722,200 @@ exports.DoorTimer = DoorTimer;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/EngineStats.js":
+/*!*************************************************!*\
+  !*** ./packages/tgui/interfaces/EngineStats.js ***!
+  \*************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.EngineStats = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _format = __webpack_require__(/*! ../format */ "./packages/tgui/format.js");
+
+/**
+ * @file
+ * @copyright 2022
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license ISC
+ */
+
+/**
+ * Helper function to transform the data into something displayable
+ * Lovingly made by Mordent and adapted
+ * @param {*} rawData - [ { foo: v, bar: v2, ... }, { foo: v3, bar: v4, ... }, ... ]
+ * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...], ... }
+ */
+var processStatsData = function processStatsData(rawData) {
+  if ((rawData != null ? rawData : []).length === 0) {
+    return null;
+  } // intialize our data structure
+
+
+  var keys = Object.keys(rawData[0]);
+  var resolvedData = keys.reduce(function (acc, curr) {
+    acc[curr] = [];
+    return acc;
+  }, {});
+
+  for (var statsDataIndex = 0; statsDataIndex < rawData.length; statsDataIndex++) {
+    var tegValues = rawData[statsDataIndex];
+
+    for (var keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+      var _tegValues$key;
+
+      var key = keys[keyIndex]; // x, y coords for graph (y defaults to 0)
+
+      resolvedData[key].push([statsDataIndex, (_tegValues$key = tegValues[key]) != null ? _tegValues$key : 0]); // 0 but "None" later
+    }
+  }
+
+  return resolvedData;
+};
+/**
+ * Helper function to get the maximum value of our stats information for display
+ * @param {*} stats - { [i, value], [i+1, value2], ...}
+ * @returns float maximum value
+ */
+
+
+var getStatsMax = function getStatsMax(stats) {
+  var found_maximum = 0; // Chart always starts at 0
+
+  for (var index in stats) {
+    var stat = stats[index][1]; // get the value
+
+    if (stat > found_maximum) {
+      found_maximum = stat;
+    }
+  }
+
+  return found_maximum;
+};
+/**
+ * Generates stack items of labeled charts for display
+ * @param {*} stats - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...] }
+ * @returns JSX of stack items
+ */
+
+
+var generateChartsFromStats = function generateChartsFromStats(stats) {
+  return Object.entries(stats).map(function (_ref, index) {
+    var key = _ref[0],
+        chart_data = _ref[1];
+    return (// margin fuckery is to remove the extra left margin on the first stack item for alignment reasons
+      (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        "mt": 0.5,
+        "ml": index === 0 ? 1 : undefined,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+          children: [key.split("|")[0], ":\xA0", chart_data[chart_data.length - 1][1] === 0 ? "No Data" : (0, _format.formatSiUnit)(chart_data[chart_data.length - 1][1], 0, key.split("|")[1])]
+        }), (0, _inferno.createComponentVNode)(2, _components.Chart.Line, {
+          "height": "3.5em",
+          "width": "20em",
+          "data": chart_data,
+          "rangeX": [0, chart_data.length - 1],
+          "rangeY": [0, getStatsMax(chart_data)],
+          "strokeColor": "	rgba(55,170,25, 1)",
+          "fillColor": "rgba(55,170,25, 0.25)"
+        })]
+      }, key)
+    );
+  });
+};
+
+var EngineStats = function EngineStats(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var turnedOn = data.turnedOn,
+      tegData = data.tegData,
+      chamberData = data.chamberData;
+  var tegStats = processStatsData(tegData);
+  var chamberStats = processStatsData(chamberData); // const meterStats = processStatsData(meterData);
+
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "height": "560",
+    "width": "760",
+    "theme": "retro-dark",
+    "title": "Engine Statistics",
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: !turnedOn || !tegStats || !chamberStats // Need stats or window will freak out
+      ? // Turned off screen
+      (0, _inferno.createComponentVNode)(2, _components.Modal, {
+        "textAlign": "center",
+        "width": 20,
+        "height": 5,
+        "fontSize": 2,
+        "fontFamily": "Courier",
+        children: ["POWER ON", (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "tooltip": "Power",
+          "icon": "power-off",
+          "selected": turnedOn,
+          "color": "caution",
+          "ml": 3,
+          "onClick": function () {
+            function onClick() {
+              return act('toggle-power');
+            }
+
+            return onClick;
+          }()
+        })]
+      }) : (0, _inferno.createComponentVNode)(2, _components.Box, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": (0, _inferno.createComponentVNode)(2, _components.Box, {
+            children: ["TEG Data", (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "tooltip": "Power",
+              "icon": "power-off",
+              "color": "caution",
+              "position": "absolute",
+              "right": 0.25,
+              "top": 0.25,
+              "onClick": function () {
+                function onClick() {
+                  return act('toggle-power');
+                }
+
+                return onClick;
+              }()
+            })]
+          }),
+          children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+            "wrap": "wrap",
+            "justify": "space-around",
+            "ml": -1,
+            children: generateChartsFromStats(tegStats)
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": "Combustion Chamber Data",
+          children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+            "wrap": "wrap",
+            "justify": "space-around",
+            "ml": -1,
+            children: generateChartsFromStats(chamberStats)
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.EngineStats = EngineStats;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/Filteriffic.js":
 /*!*************************************************!*\
   !*** ./packages/tgui/interfaces/Filteriffic.js ***!
@@ -6073,6 +7160,38 @@ var FilterFlagsEntry = function FilterFlagsEntry(props, context) {
   })(flags);
 };
 
+var FilterSpaceEntry = function FilterSpaceEntry(props, context) {
+  var name = props.name,
+      value = props.value,
+      filterName = props.filterName,
+      filterType = props.filterType;
+
+  var _useBackend7 = (0, _backend.useBackend)(context),
+      act = _useBackend7.act,
+      data = _useBackend7.data;
+
+  var filterInfo = data.filter_info;
+  var flags = filterInfo[filterType]['space'];
+  return (0, _collections.map)(function (spaceField, flagName) {
+    return (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+      "checked": value === spaceField,
+      "content": flagName,
+      "onClick": function () {
+        function onClick() {
+          var _new_data6;
+
+          return act('modify_filter_value', {
+            name: filterName,
+            new_data: (_new_data6 = {}, _new_data6[name] = spaceField, _new_data6)
+          });
+        }
+
+        return onClick;
+      }()
+    });
+  })(flags);
+};
+
 var FilterDataEntry = function FilterDataEntry(props, context) {
   var name = props.name,
       value = props.value,
@@ -6084,7 +7203,8 @@ var FilterDataEntry = function FilterDataEntry(props, context) {
     string: (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, FilterTextEntry, Object.assign({}, props))),
     color: (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, FilterColorEntry, Object.assign({}, props))),
     icon: (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, FilterIconEntry, Object.assign({}, props))),
-    flags: (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, FilterFlagsEntry, Object.assign({}, props)))
+    flags: (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, FilterFlagsEntry, Object.assign({}, props))),
+    space: (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, FilterSpaceEntry, Object.assign({}, props)))
   };
   var filterEntryMap = {
     x: 'float',
@@ -6096,6 +7216,7 @@ var FilterDataEntry = function FilterDataEntry(props, context) {
     color: 'color',
     offset: 'float',
     radius: 'float',
+    space: 'space',
     falloff: 'float',
     density: 'int',
     threshold: 'float',
@@ -6113,9 +7234,9 @@ var FilterDataEntry = function FilterDataEntry(props, context) {
 };
 
 var FilterEntry = function FilterEntry(props, context) {
-  var _useBackend7 = (0, _backend.useBackend)(context),
-      act = _useBackend7.act,
-      data = _useBackend7.data;
+  var _useBackend8 = (0, _backend.useBackend)(context),
+      act = _useBackend8.act,
+      data = _useBackend8.data;
 
   var name = props.name,
       filterDataEntry = props.filterDataEntry;
@@ -6189,9 +7310,9 @@ var FilterEntry = function FilterEntry(props, context) {
 };
 
 var Filteriffic = function Filteriffic(props, context) {
-  var _useBackend8 = (0, _backend.useBackend)(context),
-      act = _useBackend8.act,
-      data = _useBackend8.data;
+  var _useBackend9 = (0, _backend.useBackend)(context),
+      act = _useBackend9.act,
+      data = _useBackend9.data;
 
   var name = data.target_name || "Unknown Object";
   var filters = data.target_filter_data || {};
@@ -6308,6 +7429,12 @@ var _components = __webpack_require__(/*! ../components */ "./packages/tgui/comp
 
 var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
 
+/**
+ * @file
+ * @copyright 2022
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
 var FlockPartitions = function FlockPartitions(props, context) {
   var _useBackend = (0, _backend.useBackend)(context),
       act = _useBackend.act;
@@ -6433,7 +7560,9 @@ var iconLookup = {
   "butchering": "recycle",
   "repairing": "tools",
   "capturing": "bars",
-  "depositing": "border-style"
+  "depositing": "border-style",
+  "observing": "eye",
+  "deconstructing": "trash"
 };
 
 var taskIcon = function taskIcon(task) {
@@ -6567,17 +7696,22 @@ var FlockStructures = function FlockStructures(props, context) {
         children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
           children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
             "width": "30%",
-            children: (0, _inferno.createComponentVNode)(2, _components.Section, {
-              children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
-                "vertical": true,
-                "align": "center",
-                children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-                  children: structure.name
-                }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-                  children: [structure.health, (0, _inferno.createComponentVNode)(2, _components.Icon, {
-                    "name": "heart"
+            children: (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+              "position": "bottom",
+              "content": structure.desc,
+              children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+                "position": "relative",
+                children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+                  "vertical": true,
+                  "align": "center",
+                  children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                    children: structure.name
+                  }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                    children: [structure.health, " ", (0, _inferno.createComponentVNode)(2, _components.Icon, {
+                      "name": "heart"
+                    })]
                   })]
-                })]
+                })
               })
             })
           }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
@@ -6699,19 +7833,17 @@ var FlockPanel = function FlockPanel(props, context) {
       data = _useBackend5.data,
       act = _useBackend5.act;
 
-  var _useLocalState = (0, _backend.useLocalState)(context, 'tabIndex', 1),
-      tabIndex = _useLocalState[0],
-      setTabIndex = _useLocalState[1];
-
-  var _useLocalState2 = (0, _backend.useLocalState)(context, 'sortBy', 'resources'),
-      sortBy = _useLocalState2[0],
-      setSortBy = _useLocalState2[1];
+  var _useLocalState = (0, _backend.useLocalState)(context, 'sortBy', 'resources'),
+      sortBy = _useLocalState[0],
+      setSortBy = _useLocalState[1];
 
   var vitals = data.vitals,
       partitions = data.partitions,
       drones = data.drones,
       structures = data.structures,
-      enemies = data.enemies;
+      enemies = data.enemies,
+      category_lengths = data.category_lengths,
+      category = data.category;
   return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
     "theme": "flock",
     "title": "Flockmind " + vitals.name,
@@ -6721,47 +7853,55 @@ var FlockPanel = function FlockPanel(props, context) {
       "scrollable": true,
       children: [(0, _inferno.createComponentVNode)(2, _components.Tabs, {
         children: [(0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-          "selected": tabIndex === 1,
+          "selected": category === 'drones',
           "onClick": function () {
             function onClick() {
-              return setTabIndex(1);
+              act('change_tab', {
+                'tab': 'drones'
+              });
             }
 
             return onClick;
           }(),
-          children: ["Drones ", "(" + drones.length + ")"]
+          children: ["Drones ", "(" + category_lengths['drones'] + ")"]
         }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-          "selected": tabIndex === 2,
+          "selected": category === 'traces',
           "onClick": function () {
             function onClick() {
-              return setTabIndex(2);
+              act('change_tab', {
+                'tab': 'traces'
+              });
             }
 
             return onClick;
           }(),
-          children: ["Partitions ", "(" + partitions.length + ")"]
+          children: ["Partitions ", "(" + category_lengths['traces'] + ")"]
         }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-          "selected": tabIndex === 3,
+          "selected": category === 'structures',
           "onClick": function () {
             function onClick() {
-              return setTabIndex(3);
+              act('change_tab', {
+                'tab': 'structures'
+              });
             }
 
             return onClick;
           }(),
-          children: ["Structures ", "(" + structures.length + ")"]
+          children: ["Structures ", "(" + category_lengths['structures'] + ")"]
         }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
-          "selected": tabIndex === 4,
+          "selected": category === 'enemies',
           "onClick": function () {
             function onClick() {
-              return setTabIndex(4);
+              act('change_tab', {
+                'tab': 'enemies'
+              });
             }
 
             return onClick;
           }(),
-          children: ["Enemies ", "(" + enemies.length + ")"]
+          children: ["Enemies ", "(" + category_lengths['enemies'] + ")"]
         })]
-      }), tabIndex === 1 && (0, _inferno.createComponentVNode)(2, _components.Box, {
+      }), category === 'drones' && (0, _inferno.createComponentVNode)(2, _components.Box, {
         children: [(0, _inferno.createComponentVNode)(2, _components.Dropdown, {
           "options": ["name", "health", "resources", "area"],
           "selected": "resources",
@@ -6776,11 +7916,11 @@ var FlockPanel = function FlockPanel(props, context) {
           "drones": drones,
           "sortBy": sortBy
         })]
-      }), tabIndex === 2 && (0, _inferno.createComponentVNode)(2, FlockPartitions, {
+      }), category === 'traces' && (0, _inferno.createComponentVNode)(2, FlockPartitions, {
         "partitions": partitions
-      }), tabIndex === 3 && (0, _inferno.createComponentVNode)(2, FlockStructures, {
+      }), category === 'structures' && (0, _inferno.createComponentVNode)(2, FlockStructures, {
         "structures": structures
-      }), tabIndex === 4 && (0, _inferno.createComponentVNode)(2, FlockEnemies, {
+      }), category === 'enemies' && (0, _inferno.createComponentVNode)(2, FlockEnemies, {
         "enemies": enemies
       })]
     })
@@ -9680,6 +10820,246 @@ exports.RecordTab = RecordTab;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/GimmickObject.js":
+/*!***************************************************!*\
+  !*** ./packages/tgui/interfaces/GimmickObject.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.GimmickObject = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+/**
+ * Copyright (c) 2022 @Azrun
+ * SPDX-License-Identifier: MIT
+ */
+var GimmickObject = function GimmickObject(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var eventList = data.eventList,
+      interactiveTypes = data.interactiveTypes,
+      activeStage = data.activeStage,
+      icon = data.icon,
+      iconState = data.iconState;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "title": "Gimmick Object Editor",
+    "width": 675,
+    "height": 600,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      "scrollable": true,
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "inline": true,
+          children: "Edit Interactive Steps"
+        }),
+        children: [(0, _inferno.createComponentVNode)(2, _components.Flex, {
+          "direction": "column",
+          children: Object.keys(eventList).map(function (event, eventIndex) {
+            return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+              children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+                "title": eventIndex,
+                children: (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                  "mb": 1,
+                  children: [(0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                    "content": "Move Step Down",
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "angle-down",
+                      "disabled": parseInt(event, 10) >= eventList.length - 1,
+                      "onClick": function () {
+                        function onClick() {
+                          return act('move-down', {
+                            event: eventIndex
+                          });
+                        }
+
+                        return onClick;
+                      }()
+                    })
+                  }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                    "content": "Move Step Down",
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "angle-up",
+                      "disabled": parseInt(event, 10) <= 0,
+                      "onClick": function () {
+                        function onClick() {
+                          return act('move-up', {
+                            event: eventIndex
+                          });
+                        }
+
+                        return onClick;
+                      }()
+                    })
+                  }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                    "content": "Make Active Step",
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "play",
+                      "disabled": parseInt(event, 10) === parseInt(activeStage, 10) - 1,
+                      "onClick": function () {
+                        function onClick() {
+                          return act('active_step', {
+                            event: eventIndex
+                          });
+                        }
+
+                        return onClick;
+                      }()
+                    })
+                  }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                    "content": "Remove step from Gimmick",
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "trash",
+                      "color": "red",
+                      "onClick": function () {
+                        function onClick() {
+                          return act('delete_event', {
+                            event: eventIndex
+                          });
+                        }
+
+                        return onClick;
+                      }()
+                    })
+                  }), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+                    children: [(0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                      "content": "Set Tool Interactive Flags (Blank will be AttackHand)",
+                      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                        "label": "Interactive Flags",
+                        children: Object.keys(interactiveTypes).map(function (type, interactiveIndex) {
+                          return (0, _inferno.createComponentVNode)(2, _components.Button, {
+                            "selected": eventList[event].interaction & interactiveTypes[type],
+                            "onClick": function () {
+                              function onClick() {
+                                return act('interaction', {
+                                  event: eventIndex,
+                                  value: interactiveTypes[type]
+                                });
+                              }
+
+                              return onClick;
+                            }(),
+                            children: type
+                          }, interactiveIndex);
+                        })
+                      })
+                    }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                      "content": "Hint appended to examine text",
+                      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                        "label": "Description",
+                        children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+                          "fluid": true,
+                          "value": eventList[event].description,
+                          "onInput": function () {
+                            function onInput(e, description) {
+                              return act('description', {
+                                event: eventIndex,
+                                value: description
+                              });
+                            }
+
+                            return onInput;
+                          }()
+                        })
+                      })
+                    }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                      "content": "Actionbar Duration",
+                      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                        "label": "Duration",
+                        children: [(0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+                          "animated": true,
+                          "width": "7em",
+                          "value": eventList[event].duration,
+                          "minValue": 1,
+                          "maxValue": 90000,
+                          "onChange": function () {
+                            function onChange(e, targetDuration) {
+                              return act('duration', {
+                                event: eventIndex,
+                                value: targetDuration
+                              });
+                            }
+
+                            return onChange;
+                          }()
+                        }), "Seconds"]
+                      })
+                    }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                      "content": "Visible Text Appended after [src]",
+                      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+                        "label": "Visible Message",
+                        children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+                          "fluid": true,
+                          "value": eventList[event].message,
+                          "onInput": function () {
+                            function onInput(e, message) {
+                              return act('message', {
+                                event: eventIndex,
+                                value: message
+                              });
+                            }
+
+                            return onInput;
+                          }()
+                        })
+                      })
+                    })]
+                  }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+                    "content": "Notify in-game admins that action was performed",
+                    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                      "icon": "flag",
+                      "selected": eventList[event].notify,
+                      "onClick": function () {
+                        function onClick() {
+                          return act('notify', {
+                            event: eventIndex,
+                            value: !eventList[event].notify
+                          });
+                        }
+
+                        return onClick;
+                      }(),
+                      children: "Notify Admins"
+                    })
+                  })]
+                })
+              })
+            }, eventIndex);
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "m": 1,
+          children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "onClick": function () {
+              function onClick() {
+                return act('add_new');
+              }
+
+              return onClick;
+            }(),
+            children: "Add Event"
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.GimmickObject = GimmickObject;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/GlassRecycler.js":
 /*!***************************************************!*\
   !*** ./packages/tgui/interfaces/GlassRecycler.js ***!
@@ -9700,9 +11080,9 @@ var _components = __webpack_require__(/*! ../components */ "./packages/tgui/comp
 
 var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
 
-var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.js");
+var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
 
-var GlassRecyclerProductEntry = function GlassRecyclerProductEntry(props, context) {
+var GlassRecyclerProductEntry = function GlassRecyclerProductEntry(props) {
   var _props$product = props.product,
       name = _props$product.name,
       cost = _props$product.cost,
@@ -9738,7 +11118,7 @@ var GlassRecyclerProductEntry = function GlassRecyclerProductEntry(props, contex
   }), (0, _inferno.createComponentVNode)(2, _components.Divider)], 4);
 };
 
-var GlassRecycler = function GlassRecycler(props, context) {
+var GlassRecycler = function GlassRecycler(_props, context) {
   var _useBackend = (0, _backend.useBackend)(context),
       act = _useBackend.act,
       data = _useBackend.data;
@@ -9789,14 +11169,12 @@ var GlassRecycler = function GlassRecycler(props, context) {
             "fill": true,
             "scrollable": true,
             "title": "Products",
-            children: products.map(function (product) {
-              var type = product.type,
-                  cost = product.cost;
-
-              if (filterAvailable && glassAmt < cost) {
-                return;
-              }
-
+            children: products.filter(function (_ref) {
+              var cost = _ref.cost;
+              return !filterAvailable || glassAmt >= cost;
+            }).map(function (product) {
+              var cost = product.cost,
+                  type = product.type;
               return (0, _inferno.createComponentVNode)(2, GlassRecyclerProductEntry, {
                 "product": product,
                 "disabled": glassAmt < cost,
@@ -9819,6 +11197,355 @@ var GlassRecycler = function GlassRecycler(props, context) {
 };
 
 exports.GlassRecycler = GlassRecycler;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/HumanInventory/index.tsx":
+/*!***********************************************************!*\
+  !*** ./packages/tgui/interfaces/HumanInventory/index.tsx ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.HumanInventory = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../../layouts */ "./packages/tgui/layouts/index.js");
+
+var SLOT_NAMES = {
+  'slot_head': 'Head',
+  'slot_wear_mask': 'Mask',
+  'slot_glasses': 'Eyes',
+  'slot_ears': 'Ears',
+  'slot_l_hand': 'Left Hand',
+  'slot_r_hand': 'Right Hand',
+  'slot_gloves': 'Gloves',
+  'slot_shoes': 'Shoes',
+  'slot_belt': 'Belt',
+  'slot_w_uniform': 'Uniform',
+  'slot_wear_suit': 'Outer Suit',
+  'slot_back': 'Back',
+  'slot_wear_id': 'ID',
+  'slot_l_store': 'Left Pocket',
+  'slot_r_store': 'Right Pocket'
+};
+
+var HumanInventory = function HumanInventory(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      data = _useBackend.data,
+      act = _useBackend.act;
+
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 300,
+    "height": 490,
+    "title": data.name,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+        "fill": true,
+        "vertical": true,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "grow": true,
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            "scrollable": true,
+            "fill": true,
+            children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+              children: Object.entries(SLOT_NAMES).map(function (_ref) {
+                var slotId = _ref[0],
+                    name = _ref[1];
+                var slot = data.slots.find(function (s) {
+                  return s.id === slotId;
+                });
+                return (0, _inferno.createComponentVNode)(2, Slot, {
+                  "name": name,
+                  "slot": slot
+                }, slotId);
+              })
+            })
+          })
+        }), Boolean(data.handcuffed || data.canSetInternal || data.internal) && (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+            children: [Boolean(data.handcuffed) && (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act('remove-handcuffs');
+                }
+
+                return onClick;
+              }(),
+              children: "Remove handcuffs"
+            }), Boolean(data.canSetInternal) && (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act('access-internals');
+                }
+
+                return onClick;
+              }(),
+              children: "Set internals"
+            }), Boolean(data.internal) && (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act('access-internals');
+                }
+
+                return onClick;
+              }(),
+              children: "Remove internals"
+            })]
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.HumanInventory = HumanInventory;
+
+var Slot = function Slot(props, context) {
+  var _useBackend2 = (0, _backend.useBackend)(context),
+      act = _useBackend2.act;
+
+  var slot = props.slot,
+      name = props.name;
+  var id = slot.id,
+      item = slot.item;
+  return (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+    "label": name,
+    children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+      "color": item ? 'default' : 'transparent',
+      "fluid": true,
+      "onClick": function () {
+        function onClick() {
+          return act('access-slot', {
+            id: id
+          });
+        }
+
+        return onClick;
+      }(),
+      children: item ? item : 'Nothing'
+    })
+  });
+};
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/HumanInventory/types.ts":
+/*!**********************************************************!*\
+  !*** ./packages/tgui/interfaces/HumanInventory/types.ts ***!
+  \**********************************************************/
+/***/ (function() {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Hypospray.js":
+/*!***********************************************!*\
+  !*** ./packages/tgui/interfaces/Hypospray.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Hypospray = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.tsx");
+
+var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
+
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+var Hypospray = function Hypospray(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var emagged = data.emagged,
+      injectionAmount = data.injectionAmount,
+      reagentData = data.reagentData;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 320,
+    "height": 300,
+    "theme": emagged ? "syndicate" : "nanotrasen",
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": emagged ? (0, _stringUtils.glitch)("Contents", 3) : "Contents",
+        "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "icon": "times",
+          "color": "red",
+          "disabled": !reagentData.totalVolume,
+          "onClick": function () {
+            function onClick() {
+              return act('dump');
+            }
+
+            return onClick;
+          }(),
+          children: "Dump"
+        }),
+        children: [(0, _inferno.createComponentVNode)(2, _ReagentInfo.ReagentGraph, {
+          "container": reagentData
+        }), (0, _inferno.createComponentVNode)(2, _ReagentInfo.ReagentList, {
+          "container": reagentData
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": "Injection Amount",
+        children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
+          "value": injectionAmount,
+          "format": function () {
+            function format(value) {
+              return value + "u";
+            }
+
+            return format;
+          }(),
+          "minValue": 1,
+          "maxValue": reagentData.maxVolume,
+          "step": 1,
+          "stepPixelSize": 10,
+          "onChange": function () {
+            function onChange(e, value) {
+              return act('changeAmount', {
+                amount: value
+              });
+            }
+
+            return onChange;
+          }()
+        })
+      })]
+    })
+  });
+};
+
+exports.Hypospray = Hypospray;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/Laundry.js":
+/*!*********************************************!*\
+  !*** ./packages/tgui/interfaces/Laundry.js ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Laundry = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var Laundry = function Laundry(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      data = _useBackend.data;
+
+  var on = data.on;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "title": "Washman 550",
+    "width": 400,
+    "height": 100,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+        "textAlign": "center",
+        "mb": 1,
+        children: on ? (0, _inferno.createComponentVNode)(2, StatusActive) : (0, _inferno.createComponentVNode)(2, StatusInactive)
+      }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+        "textAlign": "center",
+        children: [(0, _inferno.createComponentVNode)(2, ButtonCycle), (0, _inferno.createComponentVNode)(2, ButtonDoor)]
+      })]
+    })
+  });
+};
+
+exports.Laundry = Laundry;
+
+var StatusActive = function StatusActive(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.NoticeBox, {
+    "warning": true,
+    children: "Please wait, machine is currently running."
+  });
+};
+
+var StatusInactive = function StatusInactive(props, context) {
+  return (0, _inferno.createComponentVNode)(2, _components.NoticeBox, {
+    "info": true,
+    children: "Insert items and press \"Turn On\" to start."
+  });
+};
+
+var ButtonCycle = function ButtonCycle(props, context) {
+  var _useBackend2 = (0, _backend.useBackend)(context),
+      act = _useBackend2.act,
+      data = _useBackend2.data;
+
+  var on = data.on;
+  return (0, _inferno.createComponentVNode)(2, _components.Button, {
+    "disabled": on,
+    "color": on ? "" : "good",
+    "icon": "fas fa-power-off",
+    "content": "Turn On",
+    "onClick": function () {
+      function onClick() {
+        return act('cycle');
+      }
+
+      return onClick;
+    }()
+  });
+};
+
+var ButtonDoor = function ButtonDoor(props, context) {
+  var _useBackend3 = (0, _backend.useBackend)(context),
+      act = _useBackend3.act,
+      data = _useBackend3.data;
+
+  var on = data.on,
+      door = data.door;
+  return (0, _inferno.createComponentVNode)(2, _components.Button, {
+    "disabled": on,
+    "color": door ? "orange" : "",
+    "icon": door ? "fas fa-door-open" : "fas fa-door-closed",
+    "content": door ? "Open" : "Closed",
+    "onClick": function () {
+      function onClick() {
+        return act('door');
+      }
+
+      return onClick;
+    }()
+  });
+};
 
 /***/ }),
 
@@ -10279,6 +12006,480 @@ var LongRangeTeleporter = function LongRangeTeleporter(props, context) {
 };
 
 exports.LongRangeTeleporter = LongRangeTeleporter;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/MechanicalDropper.js":
+/*!*******************************************************!*\
+  !*** ./packages/tgui/interfaces/MechanicalDropper.js ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.MechanicalDropper = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _math = __webpack_require__(/*! common/math */ "./packages/common/math.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var TO_SELF = 0;
+var TO_TARGET = 1;
+
+var DropperModeSection = function DropperModeSection(props) {
+  var transferMode = props.transferMode,
+      onTransferModeChange = props.onTransferModeChange;
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "fitted": true,
+    "py": 0.6,
+    "pl": 0.6,
+    "pr": 1.2,
+    children: (0, _inferno.createComponentVNode)(2, _components.Tabs, {
+      "vertical": true,
+      children: [(0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+        "selected": transferMode === TO_SELF,
+        "color": "green",
+        "onClick": function () {
+          function onClick() {
+            return onTransferModeChange(TO_SELF);
+          }
+
+          return onClick;
+        }(),
+        children: "Draw"
+      }), (0, _inferno.createComponentVNode)(2, _components.Tabs.Tab, {
+        "selected": transferMode === TO_TARGET,
+        "color": "red",
+        "onClick": function () {
+          function onClick() {
+            return onTransferModeChange(TO_TARGET);
+          }
+
+          return onClick;
+        }(),
+        children: "Drop"
+      })]
+    })
+  });
+};
+
+var DropperAmountSection = function DropperAmountSection(props) {
+  var curTransferAmt = props.curTransferAmt,
+      minTransferAmt = props.minTransferAmt,
+      maxTransferAmt = props.maxTransferAmt,
+      onTransferAmtChange = props.onTransferAmtChange,
+      curReagentVol = props.curReagentVol,
+      reagentColor = props.reagentColor;
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Stack, {
+      "align": "center",
+      "pb": 1,
+      children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "textAlign": "right",
+          "width": "3em",
+          children: curReagentVol + "u"
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        "grow": true,
+        children: (0, _inferno.createComponentVNode)(2, _components.ProgressBar, {
+          "value": curReagentVol,
+          "minValue": 0,
+          "maxValue": maxTransferAmt,
+          "color": reagentColor
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "textAlign": "left",
+          "width": "3em",
+          children: maxTransferAmt + "u"
+        })
+      })]
+    }), (0, _inferno.createComponentVNode)(2, _components.Stack, {
+      "align": "center",
+      children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "textAlign": "center",
+          "width": "3em",
+          "content": "Min",
+          "onClick": function () {
+            function onClick() {
+              return onTransferAmtChange(minTransferAmt);
+            }
+
+            return onClick;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        "grow": true,
+        children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
+          "minValue": minTransferAmt,
+          "maxValue": maxTransferAmt,
+          "stepPixelSize": 20,
+          "step": 1,
+          "value": curTransferAmt,
+          "onChange": function () {
+            function onChange(_e, value) {
+              return onTransferAmtChange(value);
+            }
+
+            return onChange;
+          }()
+        })
+      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "textAlign": "center",
+          "width": "3em",
+          "content": "Max",
+          "onClick": function () {
+            function onClick() {
+              return onTransferAmtChange(maxTransferAmt);
+            }
+
+            return onClick;
+          }()
+        })
+      })]
+    })]
+  });
+};
+
+var MechanicalDropper = function MechanicalDropper(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var curTransferAmt = data.curTransferAmt,
+      minTransferAmt = data.minTransferAmt,
+      maxTransferAmt = data.maxTransferAmt,
+      transferMode = data.transferMode,
+      curReagentVol = data.curReagentVol,
+      reagentColor = data.reagentColor;
+
+  var onTransferModeChange = function onTransferModeChange(mode) {
+    act("mode", {
+      mode: mode
+    });
+  };
+
+  var onTransferAmtChange = function onTransferAmtChange(amt) {
+    amt = (0, _math.round)((0, _math.clamp)(amt, minTransferAmt, maxTransferAmt), 1);
+    act("amt", {
+      amt: amt
+    });
+  };
+
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "title": "Mechanical Dropper",
+    "width": 400,
+    "height": 105,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+        children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "align": "center",
+          children: (0, _inferno.createComponentVNode)(2, DropperModeSection, {
+            "transferMode": transferMode,
+            "onTransferModeChange": onTransferModeChange
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+          "grow": true,
+          children: (0, _inferno.createComponentVNode)(2, DropperAmountSection, {
+            "curTransferAmt": curTransferAmt,
+            "minTransferAmt": minTransferAmt,
+            "maxTransferAmt": maxTransferAmt,
+            "onTransferAmtChange": onTransferAmtChange,
+            "curReagentVol": curReagentVol,
+            "reagentColor": reagentColor
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.MechanicalDropper = MechanicalDropper;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/MineralMagnet.js":
+/*!***************************************************!*\
+  !*** ./packages/tgui/interfaces/MineralMagnet.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.MineralMagnet = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _format = __webpack_require__(/*! ../format */ "./packages/tgui/format.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+var getMagnetCondition = function getMagnetCondition(condition) {
+  if (condition >= 95) return (0, _inferno.createComponentVNode)(2, _components.Box, {
+    "inline": true,
+    "color": "good",
+    children: "Optimal"
+  });else if (condition >= 70) return (0, _inferno.createComponentVNode)(2, _components.Box, {
+    "inline": true,
+    "color": "olive",
+    children: "Mild Structural Damage"
+  });else if (condition >= 40) return (0, _inferno.createComponentVNode)(2, _components.Box, {
+    "inline": true,
+    "color": "yellow",
+    children: "Heavy Structural Damage"
+  });else if (condition >= 10) return (0, _inferno.createComponentVNode)(2, _components.Box, {
+    "inline": true,
+    "color": "average",
+    children: "Extreme Structural Damage"
+  });else return (0, _inferno.createComponentVNode)(2, _components.Box, {
+    "inline": true,
+    "color": "bad",
+    children: "Destruction Imminent"
+  });
+};
+
+var MineralMagnet = function MineralMagnet(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var isLinked = data.isLinked,
+      magnetActive = data.magnetActive,
+      magnetAutomaticMode = data.magnetAutomaticMode,
+      magnetCooldownOverride = data.magnetCooldownOverride,
+      magnetHealth = data.magnetHealth,
+      magnetLastUsed = data.magnetLastUsed;
+  var time = data.time;
+  var linkedMagnets = data.linkedMagnets || [];
+  var miningEncounters = data.miningEncounters || [];
+  var onCooldown = magnetLastUsed > time;
+
+  var _useLocalState = (0, _backend.useLocalState)(context, 'viewEncounters', false),
+      viewEncounters = _useLocalState[0],
+      setViewEncounters = _useLocalState[1];
+
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 300,
+    "height": 240,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": "Magnet Status",
+        children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+          children: ["Condition: ", isLinked ? getMagnetCondition(magnetHealth) : (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "inline": true,
+            "color": "bad",
+            children: "No Magnet Linked"
+          })]
+        }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+          children: ["Status: ", magnetActive ? "Pulling New Mineral Source" : onCooldown ? (0, _inferno.createFragment)([(0, _inferno.createTextVNode)("Cooling Down: "), (0, _inferno.createComponentVNode)(2, _components.TimeDisplay, {
+            "value": Math.max(magnetLastUsed - time, 0),
+            "timing": true,
+            "format": function () {
+              function format(value) {
+                return (0, _format.formatTime)(value);
+              }
+
+              return format;
+            }()
+          })], 4) : "Idle"]
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": "Magnet Controls",
+        "buttons": (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "textAlign": "center",
+          "icon": "rss",
+          "onClick": function () {
+            function onClick() {
+              return act('geoscan');
+            }
+
+            return onClick;
+          }(),
+          children: "Scan"
+        }),
+        children: [(!!magnetActive || onCooldown && !magnetCooldownOverride) && (0, _inferno.createComponentVNode)(2, _components.Dimmer, {
+          "fontSize": 1.75,
+          "pb": 2,
+          children: magnetActive ? "Magnet Active" : "On Cooldown"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "textAlign": "center",
+          "color": onCooldown && magnetCooldownOverride && "average",
+          "icon": "magnet",
+          "onClick": function () {
+            function onClick() {
+              return act('activatemagnet');
+            }
+
+            return onClick;
+          }(),
+          "fluid": true,
+          children: "Activate Magnet"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+          "textAlign": "center",
+          "color": onCooldown && magnetCooldownOverride && "average",
+          "icon": "search",
+          "disabled": !miningEncounters.length,
+          "onClick": function () {
+            function onClick() {
+              return setViewEncounters(true);
+            }
+
+            return onClick;
+          }(),
+          "fluid": true,
+          children: "Activate telescope location"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+          "checked": magnetCooldownOverride,
+          "onClick": function () {
+            function onClick() {
+              return act('overridecooldown');
+            }
+
+            return onClick;
+          }(),
+          "style": {
+            'z-index': '1'
+          },
+          children: "Override Cooldown"
+        }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+          "checked": magnetAutomaticMode,
+          "onClick": function () {
+            function onClick() {
+              return act('automode');
+            }
+
+            return onClick;
+          }(),
+          "style": {
+            'z-index': '1'
+          },
+          children: "Automatic Mode"
+        })]
+      }), viewEncounters && (0, _inferno.createComponentVNode)(2, _components.Modal, {
+        "full": true,
+        "ml": 1,
+        "width": "230px",
+        "height": "200px",
+        children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+          "vertical": true,
+          "fill": true,
+          children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+            "grow": true,
+            children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+              "scrollable": true,
+              "fill": true,
+              children: miningEncounters.map(function (encounter) {
+                return (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "onClick": function () {
+                    function onClick() {
+                      act('activateselectable', {
+                        encounter_id: encounter.id
+                      });
+                      setViewEncounters(false);
+                    }
+
+                    return onClick;
+                  }(),
+                  "fluid": true,
+                  children: encounter.name
+                }, encounter.id);
+              })
+            })
+          }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+            children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
+              children: [(0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                "grow": true,
+                "pt": 0.5,
+                "color": "label",
+                children: [(0, _inferno.createComponentVNode)(2, _components.Icon, {
+                  "name": "search"
+                }), " Choose a location"]
+              }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+                children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "color": "bad",
+                  "icon": "times",
+                  "onClick": function () {
+                    function onClick() {
+                      return setViewEncounters(false);
+                    }
+
+                    return onClick;
+                  }(),
+                  children: "Cancel"
+                })
+              })]
+            })
+          })]
+        })
+      }), !!isLinked || (0, _inferno.createComponentVNode)(2, _components.Modal, {
+        "full": true,
+        "ml": 1,
+        "width": "270px",
+        "height": "200px",
+        children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": "Choose Linked Magnet",
+          "scrollable": true,
+          "fill": true,
+          children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+            "textAlign": "center",
+            "icon": "rss",
+            "fluid": true,
+            "onClick": function () {
+              function onClick() {
+                return act('magnetscan');
+              }
+
+              return onClick;
+            }(),
+            children: "Scan for Magnets"
+          }), (0, _inferno.createComponentVNode)(2, _components.Divider), linkedMagnets.map(function (magnet) {
+            var _magnet$angle;
+
+            return (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "icon": magnet.angle === undefined ? "circle" : "arrow-right",
+              "iconRotation": (_magnet$angle = magnet.angle) != null ? _magnet$angle : 0,
+              "textAlign": "center",
+              "fluid": true,
+              "onClick": function () {
+                function onClick() {
+                  return act('linkmagnet', magnet);
+                }
+
+                return onClick;
+              }(),
+              children: magnet.name + " at (" + magnet.x + ", " + magnet.y + ")"
+            }, magnet.ref);
+          })]
+        })
+      })]
+    })
+  });
+};
+
+exports.MineralMagnet = MineralMagnet;
 
 /***/ }),
 
@@ -12666,6 +14867,254 @@ exports.PlayerPanel = PlayerPanel;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/PortablePump.js":
+/*!**************************************************!*\
+  !*** ./packages/tgui/interfaces/PortablePump.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.PortablePump = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _PortableAtmos = __webpack_require__(/*! ./common/PortableAtmos */ "./packages/tgui/interfaces/common/PortableAtmos.js");
+
+var PortablePump = function PortablePump(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var connected = data.connected,
+      on = data.on,
+      direction_out = data.direction_out,
+      holding = data.holding,
+      pressure = data.pressure,
+      targetPressure = data.targetPressure,
+      maxPressure = data.maxPressure,
+      minRelease = data.minRelease,
+      maxRelease = data.maxRelease;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 305,
+    "height": 365,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: [(0, _inferno.createComponentVNode)(2, _PortableAtmos.PortableBasicInfo, {
+        "connected": connected,
+        "pressure": pressure,
+        "maxPressure": maxPressure,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Divider), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+          children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+            "label": "Pump Power",
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "content": on ? 'On' : 'Off',
+              "color": on ? 'average' : 'default',
+              "onClick": function () {
+                function onClick() {
+                  return act("toggle-power");
+                }
+
+                return onClick;
+              }()
+            })
+          }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+            "label": "Target Pressure",
+            children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act("set-pressure", {
+                    targetPressure: minRelease
+                  });
+                }
+
+                return onClick;
+              }(),
+              "content": "Min"
+            }), (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+              "animated": true,
+              "width": "7em",
+              "value": targetPressure,
+              "minValue": minRelease,
+              "maxValue": maxRelease,
+              "onChange": function () {
+                function onChange(e, newTargetPressure) {
+                  return act("set-pressure", {
+                    targetPressure: newTargetPressure
+                  });
+                }
+
+                return onChange;
+              }()
+            }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act("set-pressure", {
+                    targetPressure: maxRelease
+                  });
+                }
+
+                return onClick;
+              }(),
+              "content": "Max"
+            })]
+          }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+            "label": "Pump Direction",
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "content": direction_out ? 'Out' : 'In',
+              "color": direction_out ? 'yellow' : 'blue',
+              "onClick": function () {
+                function onClick() {
+                  return act("toggle-pump");
+                }
+
+                return onClick;
+              }()
+            })
+          })]
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _PortableAtmos.PortableHoldingTank, {
+        "holding": holding,
+        "onEjectTank": function () {
+          function onEjectTank() {
+            return act("eject-tank");
+          }
+
+          return onEjectTank;
+        }()
+      })]
+    })
+  });
+};
+
+exports.PortablePump = PortablePump;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/PortableScrubber.js":
+/*!******************************************************!*\
+  !*** ./packages/tgui/interfaces/PortableScrubber.js ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.PortableScrubber = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _PortableAtmos = __webpack_require__(/*! ./common/PortableAtmos */ "./packages/tgui/interfaces/common/PortableAtmos.js");
+
+var PortableScrubber = function PortableScrubber(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var connected = data.connected,
+      on = data.on,
+      holding = data.holding,
+      pressure = data.pressure,
+      inletFlow = data.inletFlow,
+      maxPressure = data.maxPressure,
+      minFlow = data.minFlow,
+      maxFlow = data.maxFlow;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "width": 305,
+    "height": 340,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: [(0, _inferno.createComponentVNode)(2, _PortableAtmos.PortableBasicInfo, {
+        "connected": connected,
+        "pressure": pressure,
+        "maxPressure": maxPressure,
+        children: [(0, _inferno.createComponentVNode)(2, _components.Divider), (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+          children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+            "label": "Scrubber Power",
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "content": on ? 'On' : 'Off',
+              "color": on ? 'average' : 'default',
+              "onClick": function () {
+                function onClick() {
+                  return act("toggle-power");
+                }
+
+                return onClick;
+              }()
+            })
+          }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+            "label": "Inlet Flow",
+            children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act("set-inlet-flow", {
+                    inletFlow: minFlow
+                  });
+                }
+
+                return onClick;
+              }(),
+              "content": "Min"
+            }), (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+              "animated": true,
+              "width": "7em",
+              "value": inletFlow,
+              "minValue": minFlow,
+              "maxValue": maxFlow,
+              "onChange": function () {
+                function onChange(e, newInletFlow) {
+                  return act("set-inlet-flow", {
+                    inletFlow: newInletFlow
+                  });
+                }
+
+                return onChange;
+              }()
+            }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "onClick": function () {
+                function onClick() {
+                  return act("set-inlet-flow", {
+                    inletFlow: maxFlow
+                  });
+                }
+
+                return onClick;
+              }(),
+              "content": "Max"
+            })]
+          })]
+        })]
+      }), (0, _inferno.createComponentVNode)(2, _PortableAtmos.PortableHoldingTank, {
+        "holding": holding,
+        "onEjectTank": function () {
+          function onEjectTank() {
+            return act("eject-tank");
+          }
+
+          return onEjectTank;
+        }()
+      })]
+    })
+  });
+};
+
+exports.PortableScrubber = PortableScrubber;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/PowerMonitor/Apc.tsx":
 /*!*******************************************************!*\
   !*** ./packages/tgui/interfaces/PowerMonitor/Apc.tsx ***!
@@ -13495,6 +15944,203 @@ var OutputControls = function OutputControls(props, context) {
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/Precipitation.js":
+/*!***************************************************!*\
+  !*** ./packages/tgui/interfaces/Precipitation.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Precipitation = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.tsx");
+
+/**
+ * Copyright (c) 2022 @Azrun
+ * SPDX-License-Identifier: MIT
+ */
+var Precipitation = function Precipitation(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var probability = data.probability,
+      cooldown = data.cooldown,
+      poolDepth = data.poolDepth,
+      containerData = data.containerData;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "title": "Precipitation",
+    "width": 300,
+    "height": 425,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      "scrollable": true,
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "inline": true,
+          children: "Precipitation"
+        }),
+        children: [(0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+          "content": "Cooldown for how fast ATOMs can be rained on.",
+          children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "m": 1,
+            children: ["Cooldown", (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+              "value": cooldown,
+              "width": 4,
+              "minValue": 0,
+              "onChange": function () {
+                function onChange(e, value) {
+                  return act('set-cooldown', {
+                    value: value
+                  });
+                }
+
+                return onChange;
+              }()
+            })]
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+          "content": "Chance of being rained on entering turf.",
+          children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "m": 1,
+            children: ["Probability", (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+              "value": probability,
+              "width": 4,
+              "minValue": 0,
+              "maxValue": 100,
+              "onChange": function () {
+                function onChange(e, value) {
+                  return act('set-probability', {
+                    value: value
+                  });
+                }
+
+                return onChange;
+              }()
+            })]
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+          "content": "Maximum fluid size/depth on the tile. (0 means no pooling will form)",
+          children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "m": 1,
+            children: ["Maximum Pool Depth", (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+              "value": poolDepth,
+              "width": 4,
+              "minValue": 0,
+              "maxValue": 100,
+              "onChange": function () {
+                function onChange(e, value) {
+                  return act('set-poolDepth', {
+                    value: value
+                  });
+                }
+
+                return onChange;
+              }()
+            })]
+          })
+        }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": "Reagents",
+          children: [(0, _inferno.createComponentVNode)(2, _ReagentInfo.ReagentList, {
+            "container": containerData,
+            "renderButtons": function () {
+              function renderButtons(reagent) {
+                return (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "px": 0.75,
+                  "mr": 1.5,
+                  "icon": "filter",
+                  "color": "red",
+                  "title": "Isolate",
+                  "onClick": function () {
+                    function onClick() {
+                      return act('isolate', {
+                        container_id: containerData.id,
+                        reagent_id: reagent.id
+                      });
+                    }
+
+                    return onClick;
+                  }()
+                }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "px": 0.75,
+                  "icon": "times",
+                  "color": "red",
+                  "title": "Flush",
+                  "onClick": function () {
+                    function onClick() {
+                      return act('flush_reagent', {
+                        container_id: containerData.id,
+                        reagent_id: reagent.id
+                      });
+                    }
+
+                    return onClick;
+                  }()
+                })], 4);
+              }
+
+              return renderButtons;
+            }()
+          }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "m": 1,
+            children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+              "ml": 1,
+              "onClick": function () {
+                function onClick() {
+                  return act("add_reagents");
+                }
+
+                return onClick;
+              }(),
+              children: "Add Reagents"
+            }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "ml": 1,
+              "onClick": function () {
+                function onClick() {
+                  return act("flush");
+                }
+
+                return onClick;
+              }(),
+              children: "Clear Reagents"
+            })]
+          })]
+        }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+          "title": "Particle",
+          children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "m": 1,
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "fluid": true,
+              "onClick": function () {
+                function onClick() {
+                  return act("particle_editor");
+                }
+
+                return onClick;
+              }(),
+              children: "Edit Particle"
+            })
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.Precipitation = Precipitation;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/Pressurizer.js":
 /*!*************************************************!*\
   !*** ./packages/tgui/interfaces/Pressurizer.js ***!
@@ -14090,7 +16736,7 @@ var _components = __webpack_require__(/*! ../components */ "./packages/tgui/comp
 
 var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
 
-var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.js");
+var _ReagentInfo = __webpack_require__(/*! ./common/ReagentInfo */ "./packages/tgui/interfaces/common/ReagentInfo.tsx");
 
 /**
  * @file
@@ -14178,7 +16824,7 @@ var ReagentDisplay = function ReagentDisplay(props, context) {
     "capitalize": true,
     "title": container.name,
     "buttons": (0, _inferno.createFragment)([(0, _inferno.createComponentVNode)(2, _components.Button, {
-      "tooltip": "Flush All",
+      "title": "Flush All",
       "icon": "times",
       "color": "red",
       "disabled": !container.totalVolume,
@@ -14192,7 +16838,7 @@ var ReagentDisplay = function ReagentDisplay(props, context) {
         return onClick;
       }()
     }), !insertable || (0, _inferno.createComponentVNode)(2, _components.Button, {
-      "tooltip": "Eject",
+      "title": "Eject",
       "icon": "eject",
       "disabled": !props.container,
       "onClick": function () {
@@ -14228,7 +16874,7 @@ var ReagentDisplay = function ReagentDisplay(props, context) {
             "mr": 1.5,
             "icon": "filter",
             "color": "red",
-            "tooltip": "Isolate",
+            "title": "Isolate",
             "onClick": function () {
               function onClick() {
                 return act('isolate', {
@@ -14243,7 +16889,7 @@ var ReagentDisplay = function ReagentDisplay(props, context) {
             "px": 0.75,
             "icon": "times",
             "color": "red",
-            "tooltip": "Flush",
+            "title": "Flush",
             "onClick": function () {
               function onClick() {
                 return act('flush_reagent', {
@@ -14271,7 +16917,7 @@ var ReagentDisplay = function ReagentDisplay(props, context) {
           "width": 17,
           "textAlign": "center",
           "selected": container.selected,
-          "tooltip": "Select Extraction and Transfer Target",
+          "title": "Select Extraction and Transfer Target",
           "icon": container.selected ? "check-square-o" : "square-o",
           "onClick": function () {
             function onClick() {
@@ -14401,7 +17047,7 @@ var ExtractableList = function ExtractableList(props, context) {
                   children: "Extract"
                 }), (0, _inferno.createComponentVNode)(2, _components.Button, {
                   "icon": "eject",
-                  "tooltip": "Eject",
+                  "title": "Eject",
                   "onClick": function () {
                     function onClick() {
                       return act('ejectingredient', {
@@ -14421,7 +17067,7 @@ var ExtractableList = function ExtractableList(props, context) {
         "basis": 1.5,
         children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
           "icon": "caret-left",
-          "tooltip": "Previous Page",
+          "title": "Previous Page",
           "disabled": page < 2,
           "onClick": function () {
             function onClick() {
@@ -14451,7 +17097,7 @@ var ExtractableList = function ExtractableList(props, context) {
           }()
         }), (0, _inferno.createComponentVNode)(2, _components.Button, {
           "icon": "caret-right",
-          "tooltip": "Next Page",
+          "title": "Next Page",
           "disabled": page > totalPages - 1,
           "onClick": function () {
             function onClick() {
@@ -14495,11 +17141,8 @@ var Rockbox = function Rockbox(_props, context) {
       act = _useBackend.act,
       data = _useBackend.data;
 
-  var amount = data.amount,
-      forSale = data.forSale,
-      name = data.name,
-      price = data.price,
-      stats = data.stats;
+  var default_price = data.default_price,
+      autosell = data.autosell;
 
   var _useLocalState = (0, _backend.useLocalState)(context, 'takeAmount', 1),
       takeAmount = _useLocalState[0],
@@ -14516,7 +17159,7 @@ var Rockbox = function Rockbox(_props, context) {
         children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
           children: (0, _inferno.createComponentVNode)(2, _components.Section, {
             "fill": true,
-            children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+            children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
               children: ["Amount to eject: ", (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
                 "value": takeAmount,
                 "width": 4,
@@ -14536,7 +17179,45 @@ var Rockbox = function Rockbox(_props, context) {
                   return onChange;
                 }()
               })]
-            })
+            }), (0, _inferno.createComponentVNode)(2, _components.Divider), (0, _inferno.createComponentVNode)(2, _components.Tooltip, {
+              "content": "Default price for new ore entries.",
+              "position": "bottom",
+              children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+                "as": "span",
+                children: [" ", "Default Price: ", (0, _inferno.createComponentVNode)(2, _components.NumberInput, {
+                  "value": default_price,
+                  "width": 4,
+                  "minValue": 0,
+                  "format": function () {
+                    function format(value) {
+                      return "$" + value;
+                    }
+
+                    return format;
+                  }(),
+                  "onChange": function () {
+                    function onChange(e, value) {
+                      return act('set-default-price', {
+                        newPrice: value
+                      });
+                    }
+
+                    return onChange;
+                  }()
+                })]
+              })
+            }), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+              "checked": autosell,
+              "tooltip": "Mark new ore entries for sale automatically.",
+              "onClick": function () {
+                function onClick() {
+                  return act('toggle-auto-sell');
+                }
+
+                return onClick;
+              }(),
+              children: "Auto-Sell"
+            })]
           })
         }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
           "grow": 1,
@@ -14646,7 +17327,7 @@ var _components = __webpack_require__(/*! ../components */ "./packages/tgui/comp
 
 var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
 
-var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.js");
+var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
 
 /**
  * @file
@@ -14667,7 +17348,7 @@ var categorySorter = function categorySorter(a, b) {
   return (DefaultSort[a.name] || DefaultSort.Other) - (DefaultSort[b.name] || DefaultSort.Other);
 };
 
-var SeedFabricator = function SeedFabricator(props, context) {
+var SeedFabricator = function SeedFabricator(_props, context) {
   var _useBackend = (0, _backend.useBackend)(context),
       data = _useBackend.data;
 
@@ -14718,7 +17399,7 @@ var SeedFabricator = function SeedFabricator(props, context) {
               "value": dispenseAmount,
               "format": function () {
                 function format(value) {
-                  return value + (0, _stringUtils.pluralize)(" seed", value);
+                  return value + (0, _stringUtils.pluralize)(' seed', value);
                 }
 
                 return format;
@@ -14726,7 +17407,7 @@ var SeedFabricator = function SeedFabricator(props, context) {
               "minValue": 1,
               "maxValue": 10,
               "onDrag": function () {
-                function onDrag(e, value) {
+                function onDrag(_e, value) {
                   return setDispenseAmount(value);
                 }
 
@@ -14764,7 +17445,7 @@ var SeedFabricator = function SeedFabricator(props, context) {
               "pr": 1.5
             })
           }), "UNIT RECHARGING"]
-        }), categories.map(function (category, index) {
+        }), categories.map(function (category) {
           return (0, _inferno.createComponentVNode)(2, SeedCategory, {
             "category": category,
             "dispenseAmount": dispenseAmount
@@ -14789,11 +17470,11 @@ var SeedCategory = function SeedCategory(props, context) {
       dispenseAmount = props.dispenseAmount;
   var name = category.name,
       seeds = category.seeds;
-  if (!seeds) return false;
-  seeds.sort(seedsSorter);
+  if (!seeds) return null;
+  var sortedSeeds = seeds.sort(seedsSorter);
   return (0, _inferno.createComponentVNode)(2, _components.Collapsible, {
     "title": name,
-    children: seeds.map(function (seed) {
+    children: sortedSeeds.map(function (seed) {
       return (0, _inferno.createComponentVNode)(2, _components.Box, {
         "as": "span",
         children: (0, _inferno.createComponentVNode)(2, _components.Button, {
@@ -15636,9 +18317,7 @@ var _components = __webpack_require__(/*! ../components */ "./packages/tgui/comp
 
 var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
 
-var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.js");
-
-var SBPurchaseEntry = function SBPurchaseEntry(props, context) {
+var SBPurchaseEntry = function SBPurchaseEntry(props) {
   var _props$product = props.product,
       pname = _props$product.pname,
       cost = _props$product.cost,
@@ -15674,7 +18353,7 @@ var SBPurchaseEntry = function SBPurchaseEntry(props, context) {
   }), (0, _inferno.createComponentVNode)(2, _components.Divider)], 4);
 };
 
-var SpendSpacebux = function SpendSpacebux(props, context) {
+var SpendSpacebux = function SpendSpacebux(_props, context) {
   var _useBackend = (0, _backend.useBackend)(context),
       act = _useBackend.act,
       data = _useBackend.data;
@@ -15982,6 +18661,519 @@ exports.TankDispenser = TankDispenser;
 
 /***/ }),
 
+/***/ "./packages/tgui/interfaces/Terrainify.js":
+/*!************************************************!*\
+  !*** ./packages/tgui/interfaces/Terrainify.js ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.Terrainify = exports.TerrainOptions = exports.TerrainToggles = exports.TerrainVehicleChoice = exports.TerrainChoice = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _math = __webpack_require__(/*! common/math */ "./packages/common/math.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+/**
+ * Copyright (c) 2022 @Azrun
+ * SPDX-License-Identifier: MIT
+ */
+var TerrainChoice = function TerrainChoice(props) {
+  var typeData = props.typeData,
+      terrain = props.terrain,
+      onTerrainValue = props.onTerrainValue;
+  return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+    "mb": 1,
+    children: (0, _inferno.createComponentVNode)(2, _components.Flex, {
+      "direction": "column",
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": "Types",
+        children: Object.keys(typeData).map(function (terrainType, buttonIndex) {
+          return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+            "mb": 1,
+            children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "fluid": true,
+              "selected": terrain === terrainType,
+              "onClick": function () {
+                function onClick() {
+                  return onTerrainValue(terrainType);
+                }
+
+                return onClick;
+              }(),
+              children: typeData[terrainType].name
+            })
+          }, buttonIndex);
+        })
+      })
+    })
+  });
+};
+
+exports.TerrainChoice = TerrainChoice;
+
+var TerrainVehicleChoice = function TerrainVehicleChoice(props) {
+  var fabricator = props.fabricator,
+      cars = props.cars,
+      onToggleFabricators = props.onToggleFabricators,
+      onToggleCars = props.onToggleCars;
+  return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+      "title": "Vehicle Options",
+      children: [(0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+        "checked": fabricator,
+        "content": "Add Subs to Fabricators",
+        "onClick": function () {
+          function onClick() {
+            return onToggleFabricators();
+          }
+
+          return onClick;
+        }()
+      }), (0, _inferno.createVNode)(1, "br"), (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+        "checked": cars,
+        "content": "Convert some Cars",
+        "onClick": function () {
+          function onClick() {
+            return onToggleCars();
+          }
+
+          return onClick;
+        }()
+      })]
+    })
+  });
+};
+
+exports.TerrainVehicleChoice = TerrainVehicleChoice;
+
+var TerrainToggles = function TerrainToggles(props) {
+  var _typeData$terrain$tog;
+
+  var terrain = props.terrain,
+      typeData = props.typeData,
+      activeToggles = props.activeToggles,
+      onToggle = props.onToggle;
+  return terrain && (_typeData$terrain$tog = typeData[terrain].toggles) != null && _typeData$terrain$tog.length ? (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": "Toggles",
+    children: typeData[terrain].toggles.map(function (toggleOption, buttonIndex) {
+      return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+        "mb": 1,
+        children: (0, _inferno.createComponentVNode)(2, _components.Button.Checkbox, {
+          "checked": activeToggles[toggleOption],
+          "content": toggleOption,
+          "onClick": function () {
+            function onClick() {
+              return onToggle(toggleOption);
+            }
+
+            return onClick;
+          }()
+        })
+      }, buttonIndex);
+    })
+  }) : "";
+};
+
+exports.TerrainToggles = TerrainToggles;
+
+var TerrainOptions = function TerrainOptions(props) {
+  var terrain = props.terrain,
+      typeData = props.typeData,
+      activeOptions = props.activeOptions,
+      onSelect = props.onSelect;
+  return terrain && typeData[terrain].options && Object.keys(typeData[terrain].options).length ? Object.keys(typeData[terrain].options).map(function (toggleType, sectionIndex) {
+    return (0, _inferno.createComponentVNode)(2, _components.Section, {
+      "title": toggleType,
+      children: typeData[terrain].options[toggleType].map(function (toggleOption, buttonIndex) {
+        return (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+          "mb": 1,
+          children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "fluid": true,
+            "selected": activeOptions[toggleType] === toggleOption,
+            "onClick": function () {
+              function onClick() {
+                return onSelect(toggleType, toggleOption);
+              }
+
+              return onClick;
+            }(),
+            children: toggleOption
+          })
+        }, buttonIndex);
+      })
+    }, sectionIndex);
+  }) : "";
+};
+
+exports.TerrainOptions = TerrainOptions;
+
+var Terrainify = function Terrainify(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var typeData = data.typeData,
+      terrain = data.terrain,
+      fabricator = data.fabricator,
+      cars = data.cars,
+      locked = data.locked,
+      activeOptions = data.activeOptions,
+      activeToggles = data.activeToggles;
+
+  var handleToggleCars = function handleToggleCars() {
+    act("cars");
+  };
+
+  var handleToggleFabs = function handleToggleFabs() {
+    act("fabricator");
+  };
+
+  var handleToggleGeneric = function handleToggleGeneric(toggle) {
+    act("toggle", {
+      toggle: toggle
+    });
+  };
+
+  var handleOptionGeneric = function handleOptionGeneric(key, value) {
+    act("option", {
+      key: key,
+      value: value
+    });
+  };
+
+  var handleSetTerrain = function handleSetTerrain(terrain) {
+    act("terrain", {
+      terrain: terrain
+    });
+  };
+
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "title": "Terrainify",
+    "width": 500,
+    "height": 600,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      "scrollable": true,
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        "title": (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "inline": true,
+          children: "Terrainify"
+        }),
+        children: [(0, _inferno.createComponentVNode)(2, _components.Flex, {
+          "direction": "row",
+          children: [(0, _inferno.createComponentVNode)(2, TerrainChoice, {
+            "typeData": typeData,
+            "terrain": terrain,
+            "onTerrainValue": handleSetTerrain
+          }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+            "ml": 2
+          }), (0, _inferno.createComponentVNode)(2, _components.Flex.Item, {
+            "ml": 1,
+            children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+              "title": "Description",
+              children: !terrain ? "..." : typeData[terrain].description
+            }), (0, _inferno.createComponentVNode)(2, TerrainVehicleChoice, {
+              "fabricator": fabricator,
+              "cars": cars,
+              "onToggleFabricators": handleToggleFabs,
+              "onToggleCars": handleToggleCars
+            }), (0, _inferno.createComponentVNode)(2, TerrainToggles, {
+              "typeData": typeData,
+              "terrain": terrain,
+              "activeToggles": activeToggles,
+              "onToggle": handleToggleGeneric
+            }), (0, _inferno.createComponentVNode)(2, TerrainOptions, {
+              "typeData": typeData,
+              "terrain": terrain,
+              "activeOptions": activeOptions,
+              "onSelect": handleOptionGeneric
+            })]
+          })]
+        }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "m": 1,
+          children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "fluid": true,
+            "disabled": locked,
+            "onClick": function () {
+              function onClick() {
+                return act("activate");
+              }
+
+              return onClick;
+            }(),
+            children: "Transform Station"
+          })
+        })]
+      })
+    })
+  });
+};
+
+exports.Terrainify = Terrainify;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/TransitTerminal.tsx":
+/*!******************************************************!*\
+  !*** ./packages/tgui/interfaces/TransitTerminal.tsx ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.TransitTerminal = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+/**
+ * @file
+ * @copyright 2022
+ * @author Stonepillar (https://github.com/stonepillars)
+ * @license ISC
+ */
+var TransitTerminal = function TransitTerminal(_props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var stops = data.stops,
+      in_transit = data.in_transit,
+      panic = data.panic;
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "resizable": true,
+    "height": 400,
+    "width": 200,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      children: (0, _inferno.createComponentVNode)(2, _components.Section, {
+        children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+          "fill": true,
+          "vertical": true,
+          children: [panic ? (0, _inferno.createComponentVNode)(2, _components.NoticeBox, {
+            "danger": true,
+            children: "Something went wrong. Call 1-800-CODER for Support."
+          }) : "", in_transit ? (0, _inferno.createComponentVNode)(2, _components.NoticeBox, {
+            "warning": true,
+            children: "The vehicle is moving. Please wait."
+          }) : "", stops.map(function (_ref) {
+            var id = _ref.id,
+                disabled = _ref.disabled,
+                label = _ref.label;
+            return (0, _inferno.createComponentVNode)(2, _components.Button, {
+              "disabled": disabled || in_transit,
+              "onClick": function () {
+                function onClick() {
+                  return act("move", {
+                    stopname: id
+                  });
+                }
+
+                return onClick;
+              }(),
+              children: label
+            }, id);
+          })]
+        })
+      })
+    })
+  });
+};
+
+exports.TransitTerminal = TransitTerminal;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/TurretControl.js":
+/*!***************************************************!*\
+  !*** ./packages/tgui/interfaces/TurretControl.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.TurretControl = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/index.js");
+
+var _backend = __webpack_require__(/*! ../backend */ "./packages/tgui/backend.ts");
+
+var _components = __webpack_require__(/*! ../components */ "./packages/tgui/components/index.js");
+
+var _mathUtils = __webpack_require__(/*! ./common/mathUtils */ "./packages/tgui/interfaces/common/mathUtils.ts");
+
+var _stringUtils = __webpack_require__(/*! ./common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
+
+var generate_kill = function generate_kill(number) {
+  var out = [];
+
+  for (var i = 0; i < number; i++) {
+    if (Math.random() > 0.3) {
+      out.push("Kill. ");
+    } else {
+      out.push("KILL. ");
+    }
+  }
+
+  return out.map(function (kill, index) {
+    return (0, _inferno.createComponentVNode)(2, _components.Box, {
+      "inline": true,
+      "preserveWhitespace": true,
+      "fontSize": (0, _mathUtils.randInt)(11, 25) + "px",
+      children: kill
+    }, index);
+  });
+};
+
+var TurretControl = function TurretControl(props, context) {
+  var _useBackend = (0, _backend.useBackend)(context),
+      act = _useBackend.act,
+      data = _useBackend.data;
+
+  var enabled = data.enabled,
+      lethal = data.lethal,
+      emagged = data.emagged,
+      area = data.area,
+      locked = data.locked;
+
+  var set_lethal = function set_lethal(value) {
+    act("setLethal", {
+      "lethal": value
+    });
+  };
+
+  var set_enabled = function set_enabled(value) {
+    act("setEnabled", {
+      "enabled": value
+    });
+  };
+
+  return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
+    "title": emagged ? "FATAL ERROR" : "Turret control (" + area + ")",
+    "theme": emagged ? 'syndicate' : 'ntos',
+    "width": 400,
+    "height": 160,
+    children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
+      "align": "center",
+      children: (0, _inferno.createComponentVNode)(2, _components.Box, {
+        "py": "6px",
+        children: [!emagged && !locked && (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "fontSize": "16px",
+          children: [(0, _inferno.createComponentVNode)(2, _components.Section, {
+            "width": "70%",
+            children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+              children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                "width": "50%",
+                children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "icon": "exclamation-triangle",
+                  "fluid": true,
+                  "selected": enabled,
+                  "onClick": function () {
+                    function onClick() {
+                      return set_enabled(true);
+                    }
+
+                    return onClick;
+                  }(),
+                  children: "Enabled"
+                })
+              }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                "width": "50%",
+                children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "icon": "power-off",
+                  "fluid": true,
+                  "selected": !enabled,
+                  "onClick": function () {
+                    function onClick() {
+                      return set_enabled(false);
+                    }
+
+                    return onClick;
+                  }(),
+                  children: "Disabled"
+                })
+              })]
+            })
+          }), (0, _inferno.createComponentVNode)(2, _components.Section, {
+            "width": "70%",
+            children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
+              children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                "width": "50%",
+                children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "icon": "bolt",
+                  "fluid": true,
+                  "selected": !lethal,
+                  "onClick": function () {
+                    function onClick() {
+                      return set_lethal(false);
+                    }
+
+                    return onClick;
+                  }(),
+                  children: "Stun"
+                })
+              }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+                "width": "50%",
+                children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+                  "icon": "skull-crossbones",
+                  "fluid": true,
+                  "selected": lethal,
+                  "onClick": function () {
+                    function onClick() {
+                      return set_lethal(true);
+                    }
+
+                    return onClick;
+                  }(),
+                  children: "Lethal"
+                })
+              })]
+            })
+          })]
+        }), !emagged && !!locked && (0, _inferno.createComponentVNode)(2, _components.Section, {
+          children: "Panel locked, swipe ID card to unlock."
+        }), !!emagged && (0, _inferno.createComponentVNode)(2, _components.Box, {
+          "py": "20px",
+          children: [(0, _inferno.createComponentVNode)(2, _components.Box, {
+            "align": "center",
+            "fontFamily": "Courier New",
+            children: (0, _stringUtils.glitch)("ERROR: UNABLE TO READ AUTHORIZATION", 12)
+          }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+            "align": "center",
+            "style": {
+              "font-size": "20px"
+            },
+            children: generate_kill(7)
+          })]
+        })]
+      })
+    })
+  });
+};
+
+exports.TurretControl = TurretControl;
+
+/***/ }),
+
 /***/ "./packages/tgui/interfaces/WeaponVendor/index.tsx":
 /*!*********************************************************!*\
   !*** ./packages/tgui/interfaces/WeaponVendor/index.tsx ***!
@@ -16004,7 +19196,7 @@ var _components = __webpack_require__(/*! ../../components */ "./packages/tgui/c
 
 var _layouts = __webpack_require__(/*! ../../layouts */ "./packages/tgui/layouts/index.js");
 
-var _stringUtils = __webpack_require__(/*! ../common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.js");
+var _stringUtils = __webpack_require__(/*! ../common/stringUtils */ "./packages/tgui/interfaces/common/stringUtils.ts");
 
 /**
  * @file
@@ -16434,10 +19626,10 @@ exports.PortableHoldingTank = PortableHoldingTank;
 
 /***/ }),
 
-/***/ "./packages/tgui/interfaces/common/ReagentInfo.js":
-/*!********************************************************!*\
-  !*** ./packages/tgui/interfaces/common/ReagentInfo.js ***!
-  \********************************************************/
+/***/ "./packages/tgui/interfaces/common/ReagentInfo.tsx":
+/*!*********************************************************!*\
+  !*** ./packages/tgui/interfaces/common/ReagentInfo.tsx ***!
+  \*********************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16466,9 +19658,11 @@ var NoContainer = {
 exports.NoContainer = NoContainer;
 
 var ReagentGraph = function ReagentGraph(props) {
-  var container = props.container,
+  var _props$className = props.className,
+      className = _props$className === void 0 ? '' : _props$className,
+      container = props.container,
       height = props.height,
-      rest = _objectWithoutPropertiesLoose(props, ["container", "height"]);
+      rest = _objectWithoutPropertiesLoose(props, ["className", "container", "height"]);
 
   var maxVolume = container.maxVolume,
       totalVolume = container.totalVolume,
@@ -16517,7 +19711,8 @@ var ReagentGraph = function ReagentGraph(props) {
             children: [(0, _inferno.createComponentVNode)(2, _components.ColorBox, {
               "color": finalColor
             }), " Current Mixture Color"]
-          }),
+          }) // Elements/InfernoNodes work in Tooltip.content anyways.
+          ,
           "position": "bottom",
           children: (0, _inferno.createComponentVNode)(2, _components.Box, {
             "height": "14px",
@@ -16539,10 +19734,12 @@ var ReagentGraph = function ReagentGraph(props) {
 exports.ReagentGraph = ReagentGraph;
 
 var ReagentList = function ReagentList(props) {
-  var container = props.container,
+  var _props$className2 = props.className,
+      className = _props$className2 === void 0 ? '' : _props$className2,
+      container = props.container,
       renderButtons = props.renderButtons,
       height = props.height,
-      rest = _objectWithoutPropertiesLoose(props, ["container", "renderButtons", "height"]);
+      rest = _objectWithoutPropertiesLoose(props, ["className", "container", "renderButtons", "height"]);
 
   var contents = container.contents || [];
   rest.height = height || 6;
@@ -16583,6 +19780,72 @@ var ReagentList = function ReagentList(props) {
 };
 
 exports.ReagentList = ReagentList;
+
+var reagentCheck = function reagentCheck(a, b) {
+  if (a.volume !== b.volume || a.name !== b.name || a.id !== b.id || a.colorR !== b.colorR || a.colorG !== b.colorG || a.colorB !== b.colorB) return true; // a property used by ReagentGraph/List has changed, update
+
+  return false;
+};
+
+var containerCheck = function containerCheck(a, b) {
+  var _a$contents, _b$contents;
+
+  if (a === b) return false; // same object or both null, no update
+
+  if (a === null || b === null) return true; // only one object is null, update
+
+  if (a.totalVolume !== b.totalVolume || a.finalColor !== b.finalColor || a.maxVolume !== b.maxVolume) return true; // a property used by ReagentGraph/List has changed, update
+
+  if (((_a$contents = a.contents) == null ? void 0 : _a$contents.length) !== ((_b$contents = b.contents) == null ? void 0 : _b$contents.length)) return true; // different number of reagents, update
+
+  for (var i in a) {
+    if (reagentCheck(a[i], b[i])) return true; // one of the reagents has changed, update
+  }
+
+  return false;
+}; // modified version of the shallowDiffers function from common/react.ts
+
+
+var reagentInfoDiffers = function reagentInfoDiffers(a, b) {
+  var i;
+
+  for (i in a) {
+    if (i === "container") continue;
+
+    if (!(i in b)) {
+      return true;
+    }
+  }
+
+  for (i in b) {
+    if (i === "container") continue;
+
+    if (a[i] !== b[i]) {
+      return true;
+    }
+  }
+
+  return containerCheck(a.container, b.container);
+};
+
+ReagentGraph.defaultHooks = {
+  onComponentShouldUpdate: function () {
+    function onComponentShouldUpdate(lastProps, nextProps) {
+      return reagentInfoDiffers(lastProps, nextProps);
+    }
+
+    return onComponentShouldUpdate;
+  }()
+};
+ReagentList.defaultHooks = {
+  onComponentShouldUpdate: function () {
+    function onComponentShouldUpdate(lastProps, nextProps) {
+      return reagentInfoDiffers(lastProps, nextProps);
+    }
+
+    return onComponentShouldUpdate;
+  }()
+};
 
 /***/ }),
 
@@ -16668,17 +19931,39 @@ exports.ReleaseValve = ReleaseValve;
 
 /***/ }),
 
-/***/ "./packages/tgui/interfaces/common/stringUtils.js":
-/*!********************************************************!*\
-  !*** ./packages/tgui/interfaces/common/stringUtils.js ***!
-  \********************************************************/
+/***/ "./packages/tgui/interfaces/common/mathUtils.ts":
+/*!******************************************************!*\
+  !*** ./packages/tgui/interfaces/common/mathUtils.ts ***!
+  \******************************************************/
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
 
 exports.__esModule = true;
-exports.capitalize = exports.pluralize = void 0;
+exports.randInt = void 0;
+
+var randInt = function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+exports.randInt = randInt;
+
+/***/ }),
+
+/***/ "./packages/tgui/interfaces/common/stringUtils.ts":
+/*!********************************************************!*\
+  !*** ./packages/tgui/interfaces/common/stringUtils.ts ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.glitch = exports.capitalize = exports.pluralize = void 0;
+
+var _mathUtils = __webpack_require__(/*! ./mathUtils */ "./packages/tgui/interfaces/common/mathUtils.ts");
 
 var pluralize = function pluralize(word, n) {
   return n !== 1 ? word + 's' : word;
@@ -16693,6 +19978,20 @@ var capitalize = function capitalize(word) {
 };
 
 exports.capitalize = capitalize;
+var glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
+
+var glitch = function glitch(text, amount) {
+  var chars = text.split('');
+
+  for (var i = 0; i < amount; i++) {
+    var charIndex = (0, _mathUtils.randInt)(0, chars.length ? chars.length - 1 : 0);
+    chars[charIndex] = glitches[(0, _mathUtils.randInt)(0, glitches.length - 1)];
+  }
+
+  return chars.join('');
+};
+
+exports.glitch = glitch;
 
 /***/ }),
 
@@ -16946,7 +20245,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113318
+      // 1659572816626
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -16963,7 +20262,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113253
+      // 1659572816447
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -16980,7 +20279,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113333
+      // 1659572816603
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -16997,7 +20296,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113325
+      // 1659572816657
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -17014,7 +20313,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113198
+      // 1659572816458
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -17031,7 +20330,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113224
+      // 1659572816470
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -17048,7 +20347,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113239
+      // 1659572816401
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -17065,7 +20364,7 @@ exports.sanitizeText = sanitizeText;
 
 // extracted by mini-css-extract-plugin
     if(true) {
-      // 1649805113342
+      // 1659572816614
       var cssReload = __webpack_require__(/*! ./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js */ "./.yarn/$$virtual/mini-css-extract-plugin-virtual-3129e88c60/0/cache/mini-css-extract-plugin-npm-1.5.0-2fc744c5c1-b666770b3b.zip/node_modules/mini-css-extract-plugin/dist/hmr/hotModuleReplacement.js")(module.id, {"esModule":false,"locals":false});
       module.hot.dispose(cssReload);
       module.hot.accept(undefined, cssReload);
@@ -17089,6 +20388,16 @@ var map = {
 	"./Airlock.js": "./packages/tgui/interfaces/Airlock.js",
 	"./AlertModal": "./packages/tgui/interfaces/AlertModal.js",
 	"./AlertModal.js": "./packages/tgui/interfaces/AlertModal.js",
+	"./Apc": "./packages/tgui/interfaces/Apc/index.js",
+	"./Apc/": "./packages/tgui/interfaces/Apc/index.js",
+	"./Apc/AccessPanel": "./packages/tgui/interfaces/Apc/AccessPanel.js",
+	"./Apc/AccessPanel.js": "./packages/tgui/interfaces/Apc/AccessPanel.js",
+	"./Apc/PowerChannelSection": "./packages/tgui/interfaces/Apc/PowerChannelSection.js",
+	"./Apc/PowerChannelSection.js": "./packages/tgui/interfaces/Apc/PowerChannelSection.js",
+	"./Apc/Wire": "./packages/tgui/interfaces/Apc/Wire.js",
+	"./Apc/Wire.js": "./packages/tgui/interfaces/Apc/Wire.js",
+	"./Apc/index": "./packages/tgui/interfaces/Apc/index.js",
+	"./Apc/index.js": "./packages/tgui/interfaces/Apc/index.js",
 	"./ArtifactPaper": "./packages/tgui/interfaces/ArtifactPaper.js",
 	"./ArtifactPaper.js": "./packages/tgui/interfaces/ArtifactPaper.js",
 	"./BarcodeComputer": "./packages/tgui/interfaces/BarcodeComputer.js",
@@ -17121,6 +20430,8 @@ var map = {
 	"./ComUplink/index.tsx": "./packages/tgui/interfaces/ComUplink/index.tsx",
 	"./ComUplink/type": "./packages/tgui/interfaces/ComUplink/type.ts",
 	"./ComUplink/type.ts": "./packages/tgui/interfaces/ComUplink/type.ts",
+	"./ContributorRewards": "./packages/tgui/interfaces/ContributorRewards.js",
+	"./ContributorRewards.js": "./packages/tgui/interfaces/ContributorRewards.js",
 	"./CyborgModuleRewriter": "./packages/tgui/interfaces/CyborgModuleRewriter/index.tsx",
 	"./CyborgModuleRewriter/": "./packages/tgui/interfaces/CyborgModuleRewriter/index.tsx",
 	"./CyborgModuleRewriter/EmptyPlaceholder": "./packages/tgui/interfaces/CyborgModuleRewriter/EmptyPlaceholder.tsx",
@@ -17155,6 +20466,8 @@ var map = {
 	"./DoorTimer/index.tsx": "./packages/tgui/interfaces/DoorTimer/index.tsx",
 	"./DoorTimer/type": "./packages/tgui/interfaces/DoorTimer/type.ts",
 	"./DoorTimer/type.ts": "./packages/tgui/interfaces/DoorTimer/type.ts",
+	"./EngineStats": "./packages/tgui/interfaces/EngineStats.js",
+	"./EngineStats.js": "./packages/tgui/interfaces/EngineStats.js",
 	"./Filteriffic": "./packages/tgui/interfaces/Filteriffic.js",
 	"./Filteriffic.js": "./packages/tgui/interfaces/Filteriffic.js",
 	"./FlockPanel": "./packages/tgui/interfaces/FlockPanel.js",
@@ -17196,12 +20509,28 @@ var map = {
 	"./GeneTek/tabs/ScannerTab.js": "./packages/tgui/interfaces/GeneTek/tabs/ScannerTab.js",
 	"./GeneTek/tabs/StorageTab": "./packages/tgui/interfaces/GeneTek/tabs/StorageTab.js",
 	"./GeneTek/tabs/StorageTab.js": "./packages/tgui/interfaces/GeneTek/tabs/StorageTab.js",
+	"./GimmickObject": "./packages/tgui/interfaces/GimmickObject.js",
+	"./GimmickObject.js": "./packages/tgui/interfaces/GimmickObject.js",
 	"./GlassRecycler": "./packages/tgui/interfaces/GlassRecycler.js",
 	"./GlassRecycler.js": "./packages/tgui/interfaces/GlassRecycler.js",
+	"./HumanInventory": "./packages/tgui/interfaces/HumanInventory/index.tsx",
+	"./HumanInventory/": "./packages/tgui/interfaces/HumanInventory/index.tsx",
+	"./HumanInventory/index": "./packages/tgui/interfaces/HumanInventory/index.tsx",
+	"./HumanInventory/index.tsx": "./packages/tgui/interfaces/HumanInventory/index.tsx",
+	"./HumanInventory/types": "./packages/tgui/interfaces/HumanInventory/types.ts",
+	"./HumanInventory/types.ts": "./packages/tgui/interfaces/HumanInventory/types.ts",
+	"./Hypospray": "./packages/tgui/interfaces/Hypospray.js",
+	"./Hypospray.js": "./packages/tgui/interfaces/Hypospray.js",
+	"./Laundry": "./packages/tgui/interfaces/Laundry.js",
+	"./Laundry.js": "./packages/tgui/interfaces/Laundry.js",
 	"./ListInput": "./packages/tgui/interfaces/ListInput.js",
 	"./ListInput.js": "./packages/tgui/interfaces/ListInput.js",
 	"./LongRangeTeleporter": "./packages/tgui/interfaces/LongRangeTeleporter.js",
 	"./LongRangeTeleporter.js": "./packages/tgui/interfaces/LongRangeTeleporter.js",
+	"./MechanicalDropper": "./packages/tgui/interfaces/MechanicalDropper.js",
+	"./MechanicalDropper.js": "./packages/tgui/interfaces/MechanicalDropper.js",
+	"./MineralMagnet": "./packages/tgui/interfaces/MineralMagnet.js",
+	"./MineralMagnet.js": "./packages/tgui/interfaces/MineralMagnet.js",
 	"./MixingDesk": "./packages/tgui/interfaces/MixingDesk.js",
 	"./MixingDesk.js": "./packages/tgui/interfaces/MixingDesk.js",
 	"./PaperSheet": "./packages/tgui/interfaces/PaperSheet.js",
@@ -17218,6 +20547,10 @@ var map = {
 	"./PlayerPanel/index.tsx": "./packages/tgui/interfaces/PlayerPanel/index.tsx",
 	"./PlayerPanel/type": "./packages/tgui/interfaces/PlayerPanel/type.ts",
 	"./PlayerPanel/type.ts": "./packages/tgui/interfaces/PlayerPanel/type.ts",
+	"./PortablePump": "./packages/tgui/interfaces/PortablePump.js",
+	"./PortablePump.js": "./packages/tgui/interfaces/PortablePump.js",
+	"./PortableScrubber": "./packages/tgui/interfaces/PortableScrubber.js",
+	"./PortableScrubber.js": "./packages/tgui/interfaces/PortableScrubber.js",
 	"./PowerMonitor": "./packages/tgui/interfaces/PowerMonitor/index.tsx",
 	"./PowerMonitor/": "./packages/tgui/interfaces/PowerMonitor/index.tsx",
 	"./PowerMonitor/Apc": "./packages/tgui/interfaces/PowerMonitor/Apc.tsx",
@@ -17230,6 +20563,8 @@ var map = {
 	"./PowerMonitor/type.ts": "./packages/tgui/interfaces/PowerMonitor/type.ts",
 	"./PowerTransmissionLaser": "./packages/tgui/interfaces/PowerTransmissionLaser.js",
 	"./PowerTransmissionLaser.js": "./packages/tgui/interfaces/PowerTransmissionLaser.js",
+	"./Precipitation": "./packages/tgui/interfaces/Precipitation.js",
+	"./Precipitation.js": "./packages/tgui/interfaces/Precipitation.js",
 	"./Pressurizer": "./packages/tgui/interfaces/Pressurizer.js",
 	"./Pressurizer.js": "./packages/tgui/interfaces/Pressurizer.js",
 	"./Radio": "./packages/tgui/interfaces/Radio/index.tsx",
@@ -17256,6 +20591,12 @@ var map = {
 	"./TEG.js": "./packages/tgui/interfaces/TEG.js",
 	"./TankDispenser": "./packages/tgui/interfaces/TankDispenser.js",
 	"./TankDispenser.js": "./packages/tgui/interfaces/TankDispenser.js",
+	"./Terrainify": "./packages/tgui/interfaces/Terrainify.js",
+	"./Terrainify.js": "./packages/tgui/interfaces/Terrainify.js",
+	"./TransitTerminal": "./packages/tgui/interfaces/TransitTerminal.tsx",
+	"./TransitTerminal.tsx": "./packages/tgui/interfaces/TransitTerminal.tsx",
+	"./TurretControl": "./packages/tgui/interfaces/TurretControl.js",
+	"./TurretControl.js": "./packages/tgui/interfaces/TurretControl.js",
 	"./WeaponVendor": "./packages/tgui/interfaces/WeaponVendor/index.tsx",
 	"./WeaponVendor/": "./packages/tgui/interfaces/WeaponVendor/index.tsx",
 	"./WeaponVendor/index": "./packages/tgui/interfaces/WeaponVendor/index.tsx",
@@ -17270,12 +20611,14 @@ var map = {
 	"./common/ListSearch.tsx": "./packages/tgui/interfaces/common/ListSearch.tsx",
 	"./common/PortableAtmos": "./packages/tgui/interfaces/common/PortableAtmos.js",
 	"./common/PortableAtmos.js": "./packages/tgui/interfaces/common/PortableAtmos.js",
-	"./common/ReagentInfo": "./packages/tgui/interfaces/common/ReagentInfo.js",
-	"./common/ReagentInfo.js": "./packages/tgui/interfaces/common/ReagentInfo.js",
+	"./common/ReagentInfo": "./packages/tgui/interfaces/common/ReagentInfo.tsx",
+	"./common/ReagentInfo.tsx": "./packages/tgui/interfaces/common/ReagentInfo.tsx",
 	"./common/ReleaseValve": "./packages/tgui/interfaces/common/ReleaseValve.js",
 	"./common/ReleaseValve.js": "./packages/tgui/interfaces/common/ReleaseValve.js",
-	"./common/stringUtils": "./packages/tgui/interfaces/common/stringUtils.js",
-	"./common/stringUtils.js": "./packages/tgui/interfaces/common/stringUtils.js",
+	"./common/mathUtils": "./packages/tgui/interfaces/common/mathUtils.ts",
+	"./common/mathUtils.ts": "./packages/tgui/interfaces/common/mathUtils.ts",
+	"./common/stringUtils": "./packages/tgui/interfaces/common/stringUtils.ts",
+	"./common/stringUtils.ts": "./packages/tgui/interfaces/common/stringUtils.ts",
 	"./common/temperatureUtils": "./packages/tgui/interfaces/common/temperatureUtils.js",
 	"./common/temperatureUtils.js": "./packages/tgui/interfaces/common/temperatureUtils.js"
 };
@@ -17405,7 +20748,7 @@ webpackContext.id = "./packages/tgui/interfaces sync recursive ^\\.\\/.*$";
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "6d0c6b555d27d901c2cb"; }
+/******/ 		__webpack_require__.h = function() { return "9ea2345b0f30c83385aa"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

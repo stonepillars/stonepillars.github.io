@@ -37651,11 +37651,24 @@ var NumberInput = /*#__PURE__*/function (_Component) {
           }
         }), 2), contentElement, (0, _inferno.createVNode)(64, "input", "NumberInput__input", null, 1, {
           "style": {
-            display: !editing ? 'none' : undefined,
+            opacity: !editing ? 0 : undefined,
             height: height,
             'line-height': lineHeight,
             'font-size': fontSize
           },
+          "onFocus": function () {
+            function onFocus(e) {
+              _this2.setState({
+                editing: true
+              });
+
+              if (onChange) {
+                onChange(e, value);
+              }
+            }
+
+            return onFocus;
+          }(),
           "onBlur": function () {
             function onBlur(e) {
               if (!editing) {
@@ -37895,6 +37908,8 @@ var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts
 
 var _Box = __webpack_require__(/*! ./Box */ "./packages/tgui/components/Box.tsx");
 
+var _constants = __webpack_require__(/*! ../constants */ "./packages/tgui/constants.js");
+
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 var ProgressBar = function ProgressBar(props) {
@@ -37912,12 +37927,27 @@ var ProgressBar = function ProgressBar(props) {
 
   var scaledValue = (0, _math.scale)(value, minValue, maxValue);
   var hasContent = children !== undefined;
-  var effectiveColor = color || (0, _math.keyOfMatchingRange)(value, ranges) || 'default';
-  return (0, _inferno.normalizeProps)((0, _inferno.createVNode)(1, "div", (0, _react.classes)(['ProgressBar', 'ProgressBar--color--' + effectiveColor, className, (0, _Box.computeBoxClassName)(rest)]), [(0, _inferno.createVNode)(1, "div", "ProgressBar__fill ProgressBar__fill--animated", null, 1, {
-    "style": {
-      width: (0, _math.clamp01)(scaledValue) * 100 + '%'
-    }
-  }), (0, _inferno.createVNode)(1, "div", "ProgressBar__content", hasContent ? children : (0, _math.toFixed)(scaledValue * 100) + '%', 0)], 4, Object.assign({}, (0, _Box.computeBoxProps)(rest))));
+  var effectiveColor = color || (0, _math.keyOfMatchingRange)(value, ranges) || 'default'; // We permit colors to be in hex format, rgb()/rgba() format,
+  // a name for a color-<name> class, or a base CSS class.
+
+  var outerProps = (0, _Box.computeBoxProps)(rest);
+  var outerClasses = ['ProgressBar', className, (0, _Box.computeBoxClassName)(rest)];
+  var fillStyles = {
+    'width': (0, _math.clamp01)(scaledValue) * 100 + '%'
+  };
+
+  if (_constants.CSS_COLORS.includes(effectiveColor) || effectiveColor === 'default') {
+    // If the color is a color-<name> class, just use that.
+    outerClasses.push('ProgressBar--color--' + effectiveColor);
+  } else {
+    // Otherwise, set styles directly.
+    outerProps.style = (outerProps.style || "") + ("border-color: " + effectiveColor + ";");
+    fillStyles['background-color'] = effectiveColor;
+  }
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createVNode)(1, "div", (0, _react.classes)(outerClasses), [(0, _inferno.createVNode)(1, "div", "ProgressBar__fill ProgressBar__fill--animated", null, 1, {
+    "style": fillStyles
+  }), (0, _inferno.createVNode)(1, "div", "ProgressBar__content", hasContent ? children : (0, _math.toFixed)(scaledValue * 100) + '%', 0)], 4, Object.assign({}, outerProps)));
 };
 
 exports.ProgressBar = ProgressBar;
@@ -42691,38 +42721,64 @@ var Story = function Story(props, context) {
       progress = _useLocalState[0],
       setProgress = _useLocalState[1];
 
+  var _useLocalState2 = (0, _backend.useLocalState)(context, 'color', ''),
+      color = _useLocalState2[0],
+      setColor = _useLocalState2[1];
+
+  var color_data = color ? {
+    color: color
+  } : {
+    ranges: {
+      good: [0.5, Infinity],
+      bad: [-Infinity, 0.1],
+      average: [0, 0.5]
+    }
+  };
   return (0, _inferno.createComponentVNode)(2, _components.Section, {
-    children: [(0, _inferno.createComponentVNode)(2, _components.ProgressBar, {
-      "ranges": {
-        good: [0.5, Infinity],
-        bad: [-Infinity, 0.1],
-        average: [0, 0.5]
-      },
+    children: [(0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _components.ProgressBar, Object.assign({}, color_data, {
       "minValue": -1,
       "maxValue": 1,
       "value": progress,
       children: ["Value: ", Number(progress).toFixed(1)]
-    }), (0, _inferno.createComponentVNode)(2, _components.Box, {
+    }))), (0, _inferno.createComponentVNode)(2, _components.Box, {
       "mt": 1,
-      children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
-        "content": "-0.1",
-        "onClick": function () {
-          function onClick() {
-            return setProgress(progress - 0.1);
-          }
+      children: (0, _inferno.createComponentVNode)(2, _components.LabeledList, {
+        "mt": "2em",
+        children: [(0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Adjust value",
+          children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+            "content": "-0.1",
+            "onClick": function () {
+              function onClick() {
+                return setProgress(progress - 0.1);
+              }
 
-          return onClick;
-        }()
-      }), (0, _inferno.createComponentVNode)(2, _components.Button, {
-        "content": "+0.1",
-        "onClick": function () {
-          function onClick() {
-            return setProgress(progress + 0.1);
-          }
+              return onClick;
+            }()
+          }), (0, _inferno.createComponentVNode)(2, _components.Button, {
+            "content": "+0.1",
+            "onClick": function () {
+              function onClick() {
+                return setProgress(progress + 0.1);
+              }
 
-          return onClick;
-        }()
-      })]
+              return onClick;
+            }()
+          })]
+        }), (0, _inferno.createComponentVNode)(2, _components.LabeledList.Item, {
+          "label": "Override color",
+          children: (0, _inferno.createComponentVNode)(2, _components.Input, {
+            "value": color,
+            "onChange": function () {
+              function onChange(e, value) {
+                return setColor(value);
+              }
+
+              return onChange;
+            }()
+          })
+        })]
+      })
     })]
   });
 };

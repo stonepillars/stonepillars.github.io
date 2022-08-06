@@ -2169,6 +2169,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0);
   transition: border-color 900ms ease-out;
@@ -2201,7 +2203,7 @@ td, th {
 }
 
 .ProgressBar--color--black {
-  border: 0.0833333333em solid black !important;
+  border-color: black !important;
 }
 
 .ProgressBar--color--black .ProgressBar__fill {
@@ -2209,7 +2211,7 @@ td, th {
 }
 
 .ProgressBar--color--white {
-  border: 0.0833333333em solid #d9d9d9 !important;
+  border-color: #d9d9d9 !important;
 }
 
 .ProgressBar--color--white .ProgressBar__fill {
@@ -2217,7 +2219,7 @@ td, th {
 }
 
 .ProgressBar--color--red {
-  border: 0.0833333333em solid #bd2020 !important;
+  border-color: #bd2020 !important;
 }
 
 .ProgressBar--color--red .ProgressBar__fill {
@@ -2225,7 +2227,7 @@ td, th {
 }
 
 .ProgressBar--color--orange {
-  border: 0.0833333333em solid #d95e0c !important;
+  border-color: #d95e0c !important;
 }
 
 .ProgressBar--color--orange .ProgressBar__fill {
@@ -2233,7 +2235,7 @@ td, th {
 }
 
 .ProgressBar--color--yellow {
-  border: 0.0833333333em solid #d9b804 !important;
+  border-color: #d9b804 !important;
 }
 
 .ProgressBar--color--yellow .ProgressBar__fill {
@@ -2241,7 +2243,7 @@ td, th {
 }
 
 .ProgressBar--color--olive {
-  border: 0.0833333333em solid #9aad14 !important;
+  border-color: #9aad14 !important;
 }
 
 .ProgressBar--color--olive .ProgressBar__fill {
@@ -2249,7 +2251,7 @@ td, th {
 }
 
 .ProgressBar--color--green {
-  border: 0.0833333333em solid #1b9638 !important;
+  border-color: #1b9638 !important;
 }
 
 .ProgressBar--color--green .ProgressBar__fill {
@@ -2257,7 +2259,7 @@ td, th {
 }
 
 .ProgressBar--color--teal {
-  border: 0.0833333333em solid #009a93 !important;
+  border-color: #009a93 !important;
 }
 
 .ProgressBar--color--teal .ProgressBar__fill {
@@ -2265,7 +2267,7 @@ td, th {
 }
 
 .ProgressBar--color--blue {
-  border: 0.0833333333em solid #1c71b1 !important;
+  border-color: #1c71b1 !important;
 }
 
 .ProgressBar--color--blue .ProgressBar__fill {
@@ -2273,7 +2275,7 @@ td, th {
 }
 
 .ProgressBar--color--violet {
-  border: 0.0833333333em solid #552dab !important;
+  border-color: #552dab !important;
 }
 
 .ProgressBar--color--violet .ProgressBar__fill {
@@ -2281,7 +2283,7 @@ td, th {
 }
 
 .ProgressBar--color--purple {
-  border: 0.0833333333em solid #8b2baa !important;
+  border-color: #8b2baa !important;
 }
 
 .ProgressBar--color--purple .ProgressBar__fill {
@@ -2289,7 +2291,7 @@ td, th {
 }
 
 .ProgressBar--color--pink {
-  border: 0.0833333333em solid #cf2082 !important;
+  border-color: #cf2082 !important;
 }
 
 .ProgressBar--color--pink .ProgressBar__fill {
@@ -2297,7 +2299,7 @@ td, th {
 }
 
 .ProgressBar--color--brown {
-  border: 0.0833333333em solid #8c5836 !important;
+  border-color: #8c5836 !important;
 }
 
 .ProgressBar--color--brown .ProgressBar__fill {
@@ -2305,7 +2307,7 @@ td, th {
 }
 
 .ProgressBar--color--grey {
-  border: 0.0833333333em solid #646464 !important;
+  border-color: #646464 !important;
 }
 
 .ProgressBar--color--grey .ProgressBar__fill {
@@ -2313,7 +2315,7 @@ td, th {
 }
 
 .ProgressBar--color--good {
-  border: 0.0833333333em solid #4d9121 !important;
+  border-color: #4d9121 !important;
 }
 
 .ProgressBar--color--good .ProgressBar__fill {
@@ -2321,7 +2323,7 @@ td, th {
 }
 
 .ProgressBar--color--average {
-  border: 0.0833333333em solid #cd7a0d !important;
+  border-color: #cd7a0d !important;
 }
 
 .ProgressBar--color--average .ProgressBar__fill {
@@ -2329,7 +2331,7 @@ td, th {
 }
 
 .ProgressBar--color--bad {
-  border: 0.0833333333em solid #bd2020 !important;
+  border-color: #bd2020 !important;
 }
 
 .ProgressBar--color--bad .ProgressBar__fill {
@@ -2337,7 +2339,7 @@ td, th {
 }
 
 .ProgressBar--color--label {
-  border: 0.0833333333em solid #657a94 !important;
+  border-color: #657a94 !important;
 }
 
 .ProgressBar--color--label .ProgressBar__fill {
@@ -5379,7 +5381,6 @@ td, th {
   display: flex;
   overflow: none;
   width: 100vw;
-  height: 270px;
   /* Text Styling */
   flex-direction: column;
 }
@@ -6658,6 +6659,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0.5);
   transition: border-color 900ms ease-out;
@@ -7176,6 +7179,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0.5);
   transition: border-color 900ms ease-out;
@@ -7715,6 +7720,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0.5);
   transition: border-color 900ms ease-out;
@@ -9716,6 +9723,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(68, 46, 26, 0.5);
   transition: border-color 900ms ease-out;
@@ -10735,6 +10744,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0.5);
   transition: border-color 900ms ease-out;
@@ -11275,6 +11286,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0.5);
   transition: border-color 900ms ease-out;
